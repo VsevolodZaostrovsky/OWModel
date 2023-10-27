@@ -1,0 +1,21 @@
+name: Build LaTeX poster (2023)
+on:   
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          working_directory: Conference 2023 Materials/poster/
+          root_file: poster.tex
+          latexmk_shell_escape: true
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v3
+        with:
+          name: Poster
+          path: Conference 2023 Materials/poster/poster.pdf
