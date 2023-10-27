@@ -56,8 +56,6 @@ class TWAP:
         for rho in range(self.num_of_rounds):
             F2 = next(orderbook_ask)
             F1 = next(orderbook_bid)
-            if F1 is None or F2 is None:
-                continue
 
             prW = (F2(1) + F1(1)) / 2 * self.W[rho]
             S = 0
