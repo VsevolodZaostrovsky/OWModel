@@ -19,6 +19,9 @@ data_parsing/data/USD_RUB_T+1__2022-11-10_QdP_bid.tsv
 
 deltaQ.tsv
 marketimpact.tsv
+*.csv
+
+dQl.csv
 
 data/
 AllTheData/
