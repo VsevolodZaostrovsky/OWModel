@@ -25,6 +25,7 @@ dQl.csv
 
 data/
 AllTheData/
+DataForImpact/
 
 optexec/__pycache__
 optexec/.pytest_cache
