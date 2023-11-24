@@ -447,7 +447,7 @@ impl OrderBook
                 let l2_ask: Vec<(i64, f64)> = orderbook.to_l2(Side::ASK);
 
                 let (features_pq_bid, features_pq_ask) = (OrderBook::calculator(l2_bid), OrderBook::calculator(l2_ask));
-                if i % 100 == -1
+                if true
                 {
                     OrderBook::feature_println(features_pq_bid.iter().map(|x| String::from(format!("{:?}", x))).collect(), &mut pq_ask_file);
                     OrderBook::feature_println(features_pq_ask.iter().map(|x| String::from(format!("{:?}", x))).collect(), &mut pq_bid_file);
