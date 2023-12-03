@@ -95,16 +95,7 @@
     Moreover, dividing data by parts and fitting the model for each part we can find the graph of $\rho (t_{i + 1}, t_i)$.
 \end{frame}
 
-\begin{frame}{What to do with that knowledge?}
-    \begin{enumerate}
-        \item It is of great interest to determine the approximate type of trajectories of that coefficients.
-        \item One is able to find $\rho$ and $\lambda$ on real data just to predict market impact.
-        \item After, it is possible to use them to create a realistic OW market simulator.
-        \item The same $\rho$ and $\lambda$ are needed in continuos OW optimal execution strategy. 
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{Another way: discrete OW model.}
+\begin{frame}{Discrete OW model.}
     The article ''Optimal trading strategy and supply/demand dynamics'' contains (Proposition 1, p. 14) 
     an algorithm for optimal execution:
     \begin{equation*}
@@ -116,7 +107,7 @@
     orders. These notations are simplified, details are in the article. 
 \end{frame}
 
-\begin{frame}{Another way: discrete OW model.}
+\begin{frame}{Limit of the discrete OW model.}
     In my opinion, it is better to start with the simpler analogue from ''Algorithmic Trading and
     Quantitative Strategies'' (p. 366, eq. 10.24):
     \begin{align*}
