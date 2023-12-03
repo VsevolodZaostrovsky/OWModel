@@ -1,0 +1,201 @@
+\documentclass[aspectratio=169]{beamer}
+
+% \renewcommand{\textSupervisors}    {Supervisors}
+
+\usetheme{vega}
+
+\title{Report on the article "The Market Impact Puzzle"}
+\subtitle{SRG Market microstructure}
+\author{Vsevolod Zaostrovsky}
+\institute{Vega Institute Foundation}
+\supervisor{Anton O. Belyakov, Anton A. Filatov}
+% \date{August 21 -- 28, 2022}
+
+\usepackage[]{lipsum}
+\begin{document}
+\maketitle
+
+\begin{frame}{Structure}
+    \tableofcontents
+\end{frame}
+
+\section{The square root model of market impact}
+\begin{frame}{The square root model of market impact}
+    The square root model of market impact was proposed by Barra (1997), based on empirical
+    regularities observed by Loeb (1983), as a practical way for asset managers to measure market
+    impact empirically.
+    \begin{equation} \label{squarerootmodel}
+        G = g(\sigma, P, V; Q) \sim \sigma \left(\frac{|Q|}{V}\right)^{1/2},
+    \end{equation}
+    here $G$ denotes the percentage cost of executing a
+    bet of $Q$ shares of stock with price $P$. \par
+    The square root formula is dimensionally consistent: bet size $Q$ is measured in shares, vollume
+    $V$ is measured in shares per day, and returns variance $\sigma^2$
+    is measured per day, the proportionality coefficient is dimensionless.
+\end{frame}
+
+\begin{frame}{Disadvantages of the square root model}
+    This square root model is elegantly simple and empirically realistic, but
+    has two distinct disadvantages:
+    \begin{itemize}
+        \item There is still no consensus on whether market impact
+              functions can indeed be described exactly by the square root function.
+        \item Most theoretical models of market microstructure lead
+              to a model of linear market impact, not a square root model. Models with non-linear market impact
+              are usually analytically intractable and seem to allow for simple arbitrage strategies.
+    \end{itemize}
+    \begin{example}
+        Given market impact \ref{squarerootmodel}, one could make profits by
+        executing over time ten buy trades of 100 shares each and then selling 1000 shares at once.
+    \end{example}
+\end{frame}
+
+% \begin{frame}{Kyle and Obizhaeva (2016)}
+%     Principles of market microstructure invariance:
+%     \begin{itemize}
+%         \item Dollar risks transferred by bets in business time.
+%         \item The dollar costs of executing bets transferring comparable risks
+%               are approximately the same across all markets.
+%     \end{itemize}
+%     These invariance hypotheses imply the empirical conjecture that market impact has the more general functional form:
+%     \begin{equation*}
+%         G = g(\sigma, P, V; Q) \sim \left( \frac{\sigma^2}{PV}\right) ^{1/3} f\left( \left( \frac{\sigma^2}{PV}\right) ^{1/3} |PQ| \right).
+%     \end{equation*}
+
+% \end{frame}
+
+\section{Restrictions Based on Volume and Volatility Equations}
+
+\begin{frame}{Restrictions Based on Volume and Volatility Equations}
+    Suppose the percentage market impact G of executing a bet of size $|Q|$ is described by a power function:
+    \begin{equation} \label{restrprice}
+        G_\beta = \alpha |Q|^\beta.
+    \end{equation}
+    The parameter $\alpha$ is a dimensional coefficient that may depend on some asset-specific characteristics
+    such as volume and volatility, and $\beta$ is the exponent of the market impact function. \par
+    Consider the system of three equations:
+    \begin{equation} \label{firstsystem}
+        \begin{cases}
+            V = \gamma E\{|Q|\},        \\
+            \sigma^2 = \gamma E\{G^2\}, \\
+            E\{G^2\} = \alpha^2 E\{|Q|^{2 \beta}\}.
+        \end{cases}
+    \end{equation}
+    Here $V$ denotes expected trading volume (shares per day), $\sigma^2$ denotes
+    expected returns variance, $\gamma$ denotes the expected number of bets (per day).
+    
+\end{frame}
+
+\begin{frame}{Market Impact Functions}
+    The system implies the trading cost:
+    \begin{equation} \label{price1}
+        G_{\beta} = \frac{\sigma}{\sqrt{\gamma}} \frac{|Q|^\beta}{\sqrt{E\{ |Q|^{2\beta}\}}}
+    \end{equation}
+    Considering different cases of the function \ref{price1} for different values of the exponent $\beta$
+    we can get new models:
+    \begin{align*}
+        G_0 = \alpha = \frac{\sigma}{\sqrt{\gamma}} = \sqrt{\frac{\sigma^2}{P V} P E\{|Q|\}}.    \\
+        G_1 = \alpha |Q| = \sqrt{\frac{\sigma^2}{P V} P E\{|Q|\}} \frac{|Q|}{\sqrt{E\{|Q|^2\}}}. \\
+        G_{1/2} = \sigma \sqrt{\left(\frac{|Q|}{V}\right)}.
+    \end{align*}
+\end{frame}
+
+\section{Restrictions Implied by Transaction Cost Invariance}
+
+\begin{frame}{Restrictions Implied by Transaction Cost Invariance}
+    Transaction costs invariance hypothesizes that the ex ante expected dollar cost $E\{|P Q| G\}$ of
+    executing a bet, without conditioning on the size of a bet, is constant and equals $C$. From \ref{restrprice}
+    we have the fourth equation (besides the system \ref{firstsystem}):
+    \begin{equation*}
+        C = \alpha P E\{|Q|^{1 + \beta}\}.
+    \end{equation*}
+    Introducing two dimensionless moment ratios $m$ and $m_\beta$:
+    \begin{equation*}
+        m := \frac{E\{|Q|\} \sqrt{E\{|Q|^{2 \beta}\}}}{E\{|Q|^{\beta + 1}\}}, \; \; \; \; \; \; \; m_\beta := \frac{(E\{|Q|\})^{\beta + 1}}{E\{|Q|^{\beta + 1}\}};
+    \end{equation*}
+    one can get:
+    \begin{equation*}
+        G = \frac{m_\beta C ^{(1- 2 \beta) / 3}}{m ^{2(1 + \beta) / 3}}  \left( \frac{\sigma^2}{PV} \right) ^{(\beta + 1) / 3} |P Q|^\beta .
+    \end{equation*}
+\end{frame}
+
+\section{Restrictions Implied by Bet Size Invariance}
+
+\begin{frame}{Restrictions Implied by Bet Size Invariance}
+    Bet size invariance hypothesizes that the dollar risk a bet
+    transfers per unit of business time,
+    \begin{equation*}
+        I := P Q \frac{\sigma}{\sqrt{\gamma}},
+    \end{equation*}
+    has an invariant mean $E{|I|}$ for all markets. It can be shown that the transaction cost and bet size invariance hypotheses are closely
+    related to each other:
+    \begin{equation*}
+        C = \frac{1}{m} E\{|P Q|\} \frac{\sigma}{\sqrt{\gamma}} = \frac{1}{m} E\{|I|\}.
+    \end{equation*}
+
+\end{frame}
+
+\begin{frame}{A universal market impact formula}
+    Let $1/L$ denote the illiquidity measure that is defined as follows:
+    \begin{equation*}
+        \frac{1}{L} := \frac{C}{E\{|P Q|\}} = \left( \frac{\sigma^2 C}{m^2 P V} \right) ^{1/3}.
+    \end{equation*}
+    The system \ref{firstsystem} leads to:
+    \begin{equation*}
+        G = \frac{1}{L} f(Z),
+    \end{equation*}
+    where $Z$ scales bet size by its mean, in particular:
+    \begin{equation*}
+        Z := \frac{Q}{E\{|Q|\}} = \frac{P Q}{C L}, \; \; \; \; \; \; \; f(Z) = m_\beta |Z|^\beta .
+    \end{equation*}
+\end{frame}
+
+\section{A Dimensional Analysis Approach with Leverage Neutrality}
+
+\begin{frame}{A Dimensional Analysis Approach with Leverage Neutrality}
+    Leverage Neutrality: the economic costs of trading bundles of risky securities and a cash-equivalent asset are the same
+    regardless of any positive or negative amount of cash-equivalent assets included in a bundle.
+    \begin{example}
+        Suppose an amount of cash equal to aP is added to each share of stock. This decrease in leverage raises the stock price
+        to $(1 + a)P$, lowers returns volatility to $\sigma/(1 + a)$, but it does not change $V$, $E\{|Q|\}$, or $\gamma$.
+    \end{example}
+    Assuming the basis
+    $\{V, P, \sigma^2, C\}$ one can apply dimensional analysis, leverage neutrality, and invariance to obtain the market impact formula:
+    \begin{equation*}
+        G = g(\sigma, P, V; Q) \sim \left( \frac{\sigma^2}{PV}\right) ^{1/3} f\left( \left( \frac{\sigma^2}{PV}\right) ^{1/3} |PQ| \right).
+    \end{equation*}
+
+\end{frame}
+
+
+\section{Conclusions and Future Research}
+
+\begin{frame}{Conclusions}
+    \begin{itemize}
+        \item Both general approaches in this paper lead to a market impact function of the type:
+              \begin{equation*}
+                  G = \frac{1}{L} f(Z).
+              \end{equation*}
+        \item Under both approaches, the square root model is a special knife-edged case of the general
+              market impact formula. It is the only case for which the market impact function depends only on volume and volatility.
+        \item To satisfy leverage
+              neutrality, another market characteristic must be added to the basis $\{V, P, \sigma^2\}$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Future Research}
+    \begin{itemize}
+        \item The dimensional analysis approach leaves many unanswered questions.
+        \item The author's approach implicitly relies on the assumption that information generates discrete trades of large sizes so that one
+              can identify bets and their market impact in the data. How to deal with it?
+        \item  Are the variables $C, m,$ and $m_\beta$ approximately constant across markets, countries, and time periods? If
+              so, what are their values? Or if not, alternatively, can one identify a set of regimes in which these
+              variables are relatively constant? Are there other similar variables that can be almost invariant?
+        \item Is there a theory based on financial economics which leads to a square root model
+              of market impact?
+        \item Is it possible for the author's approach to generate quantitative predictions about the dynamic properties of market impact?
+
+    \end{itemize}
+\end{frame}
+
+\end{document}

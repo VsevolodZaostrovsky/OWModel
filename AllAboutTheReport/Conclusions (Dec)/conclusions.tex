@@ -1,0 +1,134 @@
+\documentclass[aspectratio=169]{beamer}
+
+% \renewcommand{\textSupervisors}    {Supervisors}
+
+\usetheme{vega}
+
+\title{Report on my research}
+\subtitle{SRG Market microstructure}
+\author{Vsevolod Zaostrovsky}
+\institute{Vega Institute Foundation}
+\supervisor{Anton O. Belyakov}
+% \date{August 21 -- 28, 2022}
+
+\usepackage[]{lipsum}
+\begin{document}
+\maketitle
+
+\begin{frame}{Implementation of the Generalized OW Market Impact Model}
+    The key recursive formula of an efficient implementation (from ''Handbook of Price
+    Impact Modeling'' --- A.3) generalizes to arbitrary event times $t_i$:
+    \begin{equation} \label{recOWM}
+        I_{t_{i+1}} = \rho (t_{i + 1}, t_i) I_{t_i} + \lambda \Delta_{i + 1} Q,
+    \end{equation}
+    where $I_{t_k}$ --- market impact, $\Delta_{i} Q$ --- change of the position (order volume); and the following $\rho$ types are considered:
+    \begin{align*}
+        & \rho (t_{i + 1}, t_i) = const,                                 \\
+        & \rho  (t_{i + 1}, t_i) = \rho ^{t_{i + 1} - t_i}.             \\
+    \end{align*}
+    We considered the square root model and AR($1$) as a banchmarks.
+
+\end{frame}
+
+\begin{frame}{Our ideas}
+    Also, we tried the following conclusions from the formula \eqref{recOWM} and our ideas inspired by it:
+    \begin{align*}
+        & I_{t+1} = \rho I_t + \lambda \sqrt{Q_{t+1}}                               \\
+        & \frac{y_{i + 1} - y_{i}}{\Delta t_{i+1}} = \rho y_i + \lambda             \\
+        & \frac{I_{i+1} - I_i}{\Delta t _{i+1}} = \rho I_i + \lambda \frac{Q_{i+1}}{\Delta t _{i+1}}.            \\
+    \end{align*}
+
+\end{frame}
+
+
+\begin{frame}{Model tests results}
+    \begin{tabular}{|c | c | c|} 
+        % \hline
+        % Model & MAE on all the data & MAE on all the data with window  \\
+        % \hline
+        % $I_{t+1} = \rho I_t + \lambda Q_{t+1}$ & $1.5680194241734309$ & $1.3953206206925255$ \\
+        % \hline
+        % $I_{t_{i+1}} = \rho ^{t_{i+1} - t_i} I_{t_i} + \lambda Q_{t_{i+1}}$ & $1.5712823852127695$ & $1.3665084586946301$  \\  
+        % \hline
+        % $I_{t+1} = \rho I_t + \lambda \sqrt{Q_{t+1}}$ & $1.9932173237366233$ & $1.5543257789006262$  \\
+        % \hline
+        % AR(1) & $2.08474538347663$ & $1.6210042798402684$  \\
+        % \hline
+        % $I_t = C \sqrt{Q_t}$ & $2.1225440510941165$ & $1.5385424276542083$ \\
+        % \hline
+        % $\frac{y_{i + 1} - y_{i}}{\Delta t_{i+1}} = \rho y_i + \lambda$ & $4.623520484527892$ & $4.0392173162843426$ \\
+        % \hline
+        % $\frac{I_{i+1} - I_i}{\Delta t _{i+1}} = \rho I_i + \lambda \frac{Q_{i+1}}{\Delta t _{i+1}}$ & $10.919683027663334$ & $12.21009705233322$  \\
+        % \hline
+
+
+        \hline
+        Model & MAE on all the data & MAE on all the data with window  \\
+        \hline
+        $I_{t_{i+1}} = \rho ^{t_{i+1} - t_i} I_{t_i} + \lambda Q_{t_{i+1}}$ & $1.57$ & $1.36$  \\  
+        \hline
+        $I_{t+1} = \rho I_t + \lambda Q_{t+1}$ & $1.57$ & $1.39$ \\
+        \hline
+        $I_{t+1} = \rho I_t + \lambda \sqrt{Q_{t+1}}$ & $1.99$ & $1.55$  \\
+        \hline
+        AR(1) & $2.08$ & $1.62$  \\
+        \hline
+        $I_t = C \sqrt{Q_t}$ & $2.12$ & $1.54$ \\
+        \hline
+        $\frac{y_{i + 1} - y_{i}}{\Delta t_{i+1}} = \rho y_i + \lambda$ & $4.62$ & $4.04$ \\
+        \hline
+        $\frac{I_{i+1} - I_i}{\Delta t _{i+1}} = \rho I_i + \lambda \frac{Q_{i+1}}{\Delta t _{i+1}}$ & $10.92$ & $12.21$  \\
+        \hline
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{How to find $\rho$ and $\lambda$?}
+    The OW model:
+    \begin{equation}
+        I_{t_{i+1}} = \rho (t_{i + 1}, t_i) I_{t_i} + \lambda \Delta_{i + 1} Q
+    \end{equation}
+    looks like ARX model:
+    \begin{equation*}
+        I(t + 1) = a_1 I(t) + b_1 Q(t),
+    \end{equation*}
+    where $a_1 = \rho$ and $b_1 = \lambda$. So, we can use time series metodology to estimate them.
+    Moreover, dividing data by parts and fitting the model for each part we can find the graph of $\rho (t_{i + 1}, t_i)$.
+\end{frame}
+
+\begin{frame}{What to do with that knowledge?}
+    \begin{enumerate}
+        \item It is of great interest to determine the approximate type of trajectories of that coefficients.
+        \item One is able to find $\rho$ and $\lambda$ on real data just to predict market impact.
+        \item After, it is possible to use them to create a realistic OW market simulator.
+        \item The same $\rho$ and $\lambda$ are needed in continuos OW optimal execution strategy. 
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Another way: discrete OW model.}
+    The article ''Optimal trading strategy and supply/demand dynamics'' contains (Proposition 1, p. 14) 
+    an algorithm for optimal execution:
+    \begin{equation*}
+        x_n = - \frac{1}{2} \delta_{n + 1} [D_{t_n} (1 - \beta_{n + 1} e^{ - \rho \frac{T}{N}} + 2 \kappa \gamma_{n+1} e^{ - 2 \rho \frac{T}{N}}) 
+        - X_{t_n} (\lambda + 2 \alpha_{n+1} - \beta_{n+1}\kappa e^{ - \rho \frac{T}{N}}) ], 
+    \end{equation*}
+    where $D_t$ is a price; $\alpha_{n+1}, \beta_{n+1}, \gamma_{n+1}, \delta_{n + 1}$ are determined recursively; $\kappa$ and $\rho$ 
+    are hyperparameters. Here and further, $x_n$ --- the volume of nth optimal order, T --- total time to trade, N --- total number of
+    orders. These notations are simplified, details are in the article. 
+\end{frame}
+
+\begin{frame}{Another way: discrete OW model.}
+    In my opinion, it is better to start with the simpler analogue from ''Algorithmic Trading and
+    Quantitative Strategies'' (p. 366, eq. 10.24):
+    \begin{align*}
+        & x_1 = x_n = \frac{X}{\rho T + 2} \\
+        & x_t = \frac{\rho X}{\rho T + 2}
+    \end{align*}
+    where $\rho$ is hyperparameter, that can be estimated (?) from:
+    \begin{equation*}
+        A_t = \overline p _t + \frac{s}{2} + x_1 \kappa e^{- \rho t},
+    \end{equation*}
+    where $A_t$ --- ask price after execution, $\overline p _t + \frac{s}{2}$ defines steady state level 
+    (here $\overline p _t$ is a price and $s$ is a spread), $\kappa$ and $\rho$ are hyperparameters. 
+\end{frame}
+
+\end{document}
