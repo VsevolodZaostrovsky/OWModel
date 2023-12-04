@@ -9,9 +9,9 @@
 \usepackage{lipsum}
 
 \title{Optimal execution problem in Obizhaeva--Wang framework}
-\author{Zaostrovsky Vsevolod}
-\supervisor{Anthon Belyakov, Ph. D.}
-\researchgroup{Market microstructure}
+\author{Vsevolod Zaostrovsky}
+\supervisor{Anton O. Belyakov, Alexey Savin}
+\researchgroup{Market Microstructure}
 
 \begin{document}
 \nocite{*} % This is needed to make sure that all references are included in the bibliography
@@ -51,10 +51,10 @@
     % \end{block}
 
         
-        \begin{align}
-            J_0 = \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
-            A_{t_n} = F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)}
-        \end{align}
+        \begin{align*}
+           J_0 &= \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
+           A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)}.
+        \end{align*}
         
        Here:
        \begin{itemize}
@@ -79,18 +79,45 @@
     \begin{column}{\onecolwid} % Begin a column which is two columns wide (column 2)
     
 
-    \begin{block}{Optimal execution strategies }
+    \begin{block}{Optimal execution strategy }
     
-    Proposition 2 from \ref{obizhaeva2013optimal} gives an optimal strategy for big $N$.
+    Proposition 2 from \cite{obizhaeva2013optimal} gives an optimal strategy for big $N$.
     
-    \begin{proposition}
+    \begin{theorem}
         As $N \rightarrow \infty$, the optimal execution strategy becomes:
-        \begin{align}
-            \lim _{N \rightarrow \infty} x_0 = \frac{X_0}{\rho T + 2}, \\
-            \lim _{N \rightarrow \infty} x_n / (T/N) = \frac{\rho X_0}{\rho T + 2}, \\
-        \end{align}
-    \end{proposition}
+        \begin{align*}
+            & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2}, \\
+            & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T), \\
+            & \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2},  \\
+        \end{align*}
+        where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
+        period, and $\dot X _t$ is the speed of trading in between these trades.
+    \end{theorem}
+    The key question here is:
     \end{block}
+
+    \begin{block}{How to find $\rho$?}
+        
+        We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
+        that can be calculated from market data. As an example, we are going to consider the regression:
+        \begin{theorem}
+            In regression:
+            \begin{equation*}
+                \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
+        = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\alpha + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
+            \end{equation*}
+            $\rho$ the same as in OW model.
+        \end{theorem}
+        % \begin{proof}
+        %     \[ D_{k+1} - D_k = -\rho D_k \Delta t_{k+1} + \alpha x_{k+1} \]
+        %     \[ \Delta t_{k+1} := t_{k+1} - t_k, \; \; \; \; \; D_k := D_{t_k}, \; \; \; \; \; x_{k}:= x_{t_k}, \; \; \; \; \; \Delta D_{k+1} := D_{k+1} - D_k . \]
+        %     \[ V_{k+1} - V_k = \lambda x_{k+1} \rightarrow \Delta D_{k+1} = \Delta A_{k+1} - \lambda x_k \] 
+        %     \[ \frac{\Delta D_{k+1}}{\Delta t_{k+1}} = - \rho D_k + \alpha \frac{x_{k+1}}{\Delta t_{k+1}} \] 
+        %     \[ \frac{\Delta D_{k+2}}{\Delta t_{k+2}} - \frac{\Delta D_{k+1}}{\Delta t_{k+1}} 
+        %         = - \rho \Delta D_{k+1} + \alpha ( \frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}) \] 
+        % \end{proof}
+    \end{block}
+
    
     
     %----------------------------------------------------------------------------------------
@@ -105,14 +132,11 @@
         %	CONCLUSION
         %----------------------------------------------------------------------------------------
         
-        \begin{block}{Conclusion}
-        This recursive branching and self-similar pattern in the structure of broccoli are what make it an example of a fractal in nature. Fractals can be found in various natural phenomena, and broccoli serves as a visually appealing example of fractal geometry in plants.
-    
-        In conclusion, broccoli exhibits fractal characteristics in its structure. 
-        The self-repeating patterns and recursive branching observed in broccoli's stalks and florets resemble the mathematical concept of fractals. 
-        This self-similarity at different scales is a defining characteristic of fractals. Therefore, broccoli can be considered an example of a fractal in nature.
-            
-        Follow us in \href{https://t.me/vega_institute}{Telegram}.
+        \begin{block}{Purposes}
+        \begin{itemize}
+            \item Propose methodology for fitting OWM factors and use it to get optimal execution strategy.
+            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
+        \end{itemize}
         
         \end{block}
         
