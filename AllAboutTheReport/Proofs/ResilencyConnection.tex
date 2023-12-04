@@ -1,0 +1,107 @@
+\documentclass[a4paper]{article}
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+%for search in russian
+\usepackage{cmap}
+%--------------------------------------
+
+%Math-specific packages
+%--------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+%Format-specific packages
+%--------------------------------------
+\usepackage[left=1cm,
+            right=1cm,
+            top=1cm,
+            bottom=1cm,
+            bindingoffset=0cm]{geometry}
+%--------------------------------------
+
+% for theorems, lemmas and definitions
+%--------------------------------------
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Теорема}
+
+\theoremstyle{definition}
+\newtheorem {definition}{Опрeделение}
+\newtheorem {task}{Задача}
+
+%--------------------------------------
+
+%Roman enum items
+\usepackage{enumerate}
+
+% For graphics
+%--------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+  % for faster compilation
+  external
+  % for cool arrows
+  , arrows.meta
+  % for angles
+  , angles
+  , quotes
+  , babel
+}
+\tikzsetexternalprefix{tasks/}
+\tikzexternalize
+
+%--------------------------------------
+
+% My commands
+%--------------------------------------
+
+\DeclareMathOperator{\sgn}{sgn}
+
+\def\const{ \mathrm{const} }
+\def\eps{ \varepsilon }
+\def\Eps{ \mathcal{E} }
+
+\def\R{ \mathbb{R} }
+\def\Z{ \mathbb{Z} }
+\def\C{ \mathbb{C} }
+\def\E{ \mathrm{E} }
+\def\D{ \mathrm{D} }
+\def\P{ \mathrm{P} }
+
+\def\littleO{ \overline{\overline{o}} }
+\def\bigO{ \underline{\underline{\mathcal{O}}} }
+
+\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*{\abs}[1]{\left\lvert#1\right\rvert}
+
+\date{Осенний семестр 2023}
+\title{Некоторые доказательства}
+
+% suppress page count
+\pagestyle{empty}
+
+
+
+\begin{document}
+    \section{Connection between resilencies in OW model and our time series model.}
+
+    \[ D_k = A_k - V_k - \frac{s}{2} \]
+    \[ D_{k+1} - D_k = -\rho D_k \Delta t_{k+1} + \alpha x_{k+1} \]
+    \[ \Delta t_{k+1} := t_{k+1} - t_k, \; \; \; \; \; D_k := D_{t_k}, \; \; \; \; \; x_{k}:= x_{t_k}, \; \; \; \; \; \Delta D_{k+1} := D_{k+1} - D_k . \]
+    \[ V_{k+1} - V_k = \lambda x_{k+1} \rightarrow \Delta D_{k+1} = \Delta A_{k+1} - \lambda x_k \] 
+    \[ \frac{\Delta D_{k+1}}{\Delta t_{k+1}} = - \rho D_k + \alpha \frac{x_{k+1}}{\Delta t_{k+1}} \] 
+    \[ \frac{\Delta D_{k+2}}{\Delta t_{k+2}} - \frac{\Delta D_{k+1}}{\Delta t_{k+1}} 
+        = - \rho \Delta D_{k+1} + \alpha ( \frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}) \] 
+    
+    \[ \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
+        = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\alpha + \lambda)\alpha (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}) \] 
+
+
+
+
+\end{document}
