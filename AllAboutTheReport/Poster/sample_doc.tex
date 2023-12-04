@@ -44,12 +44,6 @@
         To find a better solution, we consider the OW model, in which terms the problem has the following form: \par  
 
 
-    % \begin{block}{Why the OW model?}
-    %     The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
-    %     much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between Obizhaeva's model and others is precisely 
-    %     that resiliency --- the speed at which supply/demand recovers to its steady state after a trade --- plays a key role in it.
-    % \end{block}
-
         
         \begin{align*}
            J_0 &= \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
@@ -77,13 +71,19 @@
     \begin{column}{\sepwid}\end{column} % Empty spacer column
     
     \begin{column}{\onecolwid} % Begin a column which is two columns wide (column 2)
+
+    \begin{block}{Why the OW model?}
+        The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
+        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between Obizhaeva's model and others is precisely 
+        that resiliency --- the speed at which supply/demand recovers to its steady state after a trade --- plays a key role in it.
+    \end{block}
     
 
     \begin{block}{Optimal execution strategy }
     
     Proposition 2 from \cite{obizhaeva2013optimal} gives an optimal strategy for big $N$.
     
-    \begin{theorem}
+    \begin{alertblock}{Optimal execution strategy in OW framework}
         As $N \rightarrow \infty$, the optimal execution strategy becomes:
         \begin{align*}
             & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2}, \\
@@ -92,7 +92,7 @@
         \end{align*}
         where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
         period, and $\dot X _t$ is the speed of trading in between these trades.
-    \end{theorem}
+    \end{alertblock}
     The key question here is:
     \end{block}
 
@@ -100,22 +100,14 @@
         
         We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
         that can be calculated from market data. As an example, we are going to consider the regression:
-        \begin{theorem}
+        \begin{alertblock}{Our method to find $\rho$}
             In regression:
             \begin{equation*}
                 \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
         = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\alpha + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
             \end{equation*}
             $\rho$ the same as in OW model.
-        \end{theorem}
-        \begin{proof}
-            \[ D_{k+1} - D_k = -\rho D_k \Delta t_{k+1} + \alpha x_{k+1} \]
-            \[ \Delta t_{k+1} := t_{k+1} - t_k, \; \; \; \; \; D_k := D_{t_k}, \; \; \; \; \; x_{k}:= x_{t_k}, \; \; \; \; \; \Delta D_{k+1} := D_{k+1} - D_k . \]
-            \[ V_{k+1} - V_k = \lambda x_{k+1} \rightarrow \Delta D_{k+1} = \Delta A_{k+1} - \lambda x_k \] 
-            \[ \frac{\Delta D_{k+1}}{\Delta t_{k+1}} = - \rho D_k + \alpha \frac{x_{k+1}}{\Delta t_{k+1}} \] 
-            \[ \frac{\Delta D_{k+2}}{\Delta t_{k+2}} - \frac{\Delta D_{k+1}}{\Delta t_{k+1}} 
-                = - \rho \Delta D_{k+1} + \alpha ( \frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}) \] 
-        \end{proof}
+        \end{alertblock}
     \end{block}
 
    
@@ -132,8 +124,28 @@
         %	CONCLUSION
         %----------------------------------------------------------------------------------------
         
+        \begin{block}{Problems}
+            \begin{itemize}
+                \item It seems that the task formulated in the KPI is more indirectly related to the article \cite{obizhaeva2013optimal}
+                than directly. \cite{obizhaeva2013optimal} and \cite{velu2020algorithmic} pose 
+                the problem significantly differently. Similar terminology we have found in \cite{webster2023handbook}, but 
+                we did not find the theory to work with in that framework, although considerable time was devoted to these vain searches.
+                Also, that leaded us to a wrong way and we wasted a lot of time trying to solve the wrong task.
+                \item The data we previously had did not have a sufficient level of detail to extract accurate model values. 
+                It was necessary to make assumptions and results that significantly distorted the final result. 
+                New data will require significant time to parse and research. Anyway, data work is very complicated.
+                \item This area is very rich and complicated. It is very hard to do even easy steps, because we did not have
+                courses on that theory. 
+                
+            \end{itemize}
+
+            
+            \end{block}
+
+
         \begin{block}{Purposes}
         \begin{itemize}
+            \item Learn to work with new data.
             \item Propose methodology for fitting OWM factors and use it to get optimal execution strategy.
             \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
         \end{itemize}
