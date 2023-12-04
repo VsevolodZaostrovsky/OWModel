@@ -1,17 +1,17 @@
 \documentclass[]{beamer}
 
 
-\usepackage[scale=1, size=custom, width=84, height=64]{beamerposter} 
+\usepackage[scale=0.85, size=custom, width=84, height=64]{beamerposter} 
 \usetheme{vegaposter} 
 
 
 \addbibresource{refs.bib}
 \usepackage{lipsum}
 
-\title{On the broccoli fractional structure}
-\author{Alexander Rosenbaum, Noname Student}
-\supervisor{Group Supervisor 1, Group Supervisor 2}
-\researchgroup{Important questions of stochastic calculus}
+\title{Optimal execution problem in Obizhaeva--Wang framework}
+\author{Zaostrovsky Vsevolod}
+\supervisor{Anthon Belyakov, Ph. D.}
+\researchgroup{Market microstructure}
 
 \begin{document}
 \nocite{*} % This is needed to make sure that all references are included in the bibliography
@@ -29,89 +29,67 @@
     
     \begin{block}{Introduction}
     
-        The problem of optimal order execution, market impact prediction and other issues related to the structure of the order book are very important for the industry, 
+        Issues related to the structure of the order book are very important for the industry, 
         so in recent decades a new young and interesting science has been built around these issues. In our research, we are looking for a way 
         to connect the latest advances in this science associated with various variations of the Obizhaeva--Wang model with the needs of industry.
     
     \end{block}
 
-    \begin{block}{Why the OW model?}
-        The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
-        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between Obizhaeva's model and others is precisely 
-        that resiliency --- the speed at which supply/demand recovers to its steady state after a trade --- plays a key role in it.
-    
-        
-    
-    \end{block}
-
     \begin{block}{Optimal execution problem}
     
-        The problem of optimal order execution, market impact prediction and other issues related to the structure of the order book are very important for the industry, 
-        so in recent decades a new young and interesting science has been built around these issues. In our research, we are looking for a way 
-        to connect the latest advances in this science associated with various variations of the Obizhaeva Wang model with the needs of industry.
-    
-    \end{block}
-    
-    
-    %----------------------------------------------------------------------------------------
-    %	OBJECTIVES
-    %----------------------------------------------------------------------------------------
-    
-    \begin{alertblock}{Objectives}
-    
-    Here are the main parts of a broccoli plant:
-    \begin{itemize}
-        \item Floret: The florets are the small, tightly packed clusters that make up the head of broccoli. These are the edible portions of the plant and are composed of immature flower buds.
+        The idea of that problem is quite simple. If one wants to sell or buy an amount of an asset large enough to have a significant 
+        impact on the market, he, obviously should not do it by one order: it would be very expensive, since a large order 
+        would remove all the upper levels in the limit order book. Therefore, in practice, all large orders are split into a large number of small ones. 
+        For example, one can simply divide an order into N equal parts and sell them at regular intervals (this is called TWAP). 
+        To find a better solution, we consider the OW model, in which terms the problem has the following form: \par  
 
-    	\item Stalk: The stalk of broccoli is the main central stem that supports the florets. It is typically thick and sturdy, providing structural support for the head.
 
-    	\item Leaves: Broccoli plants have large, dark green leaves that extend from the stalk. While the leaves are not commonly consumed, they are edible and can be cooked or used in recipes, similar to other leafy greens.
+    % \begin{block}{Why the OW model?}
+    %     The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
+    %     much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between Obizhaeva's model and others is precisely 
+    %     that resiliency --- the speed at which supply/demand recovers to its steady state after a trade --- plays a key role in it.
+    % \end{block}
 
-    \end{itemize}
+        
+        \begin{align}
+            J_0 = \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
+            A_{t_n} = F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)}
+        \end{align}
+        
+       Here:
+       \begin{itemize}
+        \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. $x_{t_n}$ 
+        --- the trade size at $t_n = \tau n$, where $\tau = T / N$. $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
+        \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
+        --- the mid-quote price; $s$ --- the bid–ask spread.
+        \item $F_t$ --- the fundamental value of the security.
+        % \item $q(P)$ --- the density of limit orders to sell at price $P$.
+        \item Parameter $\lambda$ captures the permanent price impact.
+        \item Parameter $q$ depends on LOB density. 
+        \item $\kappa = \frac{1}{q} - \lambda $
+        \item Parameter $\rho$ captures the resiliency.
+
+       \end{itemize}
+        \end{block}
     
-    \end{alertblock}
     
-    %------------------------------------------------
-    \begin{block}{Problem statement}
-    These components together form the fractional structure of broccoli, with the florets being the most recognizable and commonly consumed part.
-    \end{block}
-    
-    %----------------------------------------------------------------------------------------
-    
-    \end{column} % End of the first column
-    
+    \end{column} 
     \begin{column}{\sepwid}\end{column} % Empty spacer column
     
     \begin{column}{\onecolwid} % Begin a column which is two columns wide (column 2)
     
+
+    \begin{block}{Optimal execution strategies }
     
-    %----------------------------------------------------------------------------------------
-    %	IMPORTANT RESULT
-    %----------------------------------------------------------------------------------------
+    Proposition 2 from \ref{obizhaeva2013optimal} gives an optimal strategy for big $N$.
     
-    \begin{alertblock}{Broccoli is rough!}
-    
-     When we examine the structure of broccoli, we can observe repeated patterns that resemble the whole plant. The branching pattern of the main stem is reflected in the smaller branches, and these branches further divide into even smaller branches, creating a self-similar pattern.
-    
-    \end{alertblock} 
-    
-    %----------------------------------------------------------------------------------------
-    
-    %----------------------------------------------------------------------------------------
-    %	MATHEMATICAL SECTION
-    %----------------------------------------------------------------------------------------
-    
-    \begin{block}{Mathematical Section}
-    
-    This self-similar pattern is characteristic of fractals. Fractals exhibit a property known as self-similarity, where parts of the object resemble the whole, or sections of the object resemble each other. 
-    
-    $$
-    N = \varepsilon^{-D}
-    $$
-    
-    The fractal nature of broccoli's structure is visually intriguing and has been studied by scientists and mathematicians interested in the beauty and mathematical properties of natural forms. 
-    
-    The branching pattern of a broccoli plant follows a fractal geometry known as a self-similar fractal. A self-similar fractal is one in which smaller parts resemble the overall shape or structure of the whole.  
+    \begin{proposition}
+        As $N \rightarrow \infty$, the optimal execution strategy becomes:
+        \begin{align}
+            \lim _{N \rightarrow \infty} x_0 = \frac{X_0}{\rho T + 2}, \\
+            \lim _{N \rightarrow \infty} x_n / (T/N) = \frac{\rho X_0}{\rho T + 2}, \\
+        \end{align}
+    \end{proposition}
     \end{block}
    
     

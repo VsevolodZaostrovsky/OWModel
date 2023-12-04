@@ -90,7 +90,17 @@
 \begin{document}
     \section{Connection between resilencies in OW model and our time series model.}
 
-    \[ D_k = A_k - V_k - \frac{s}{2} \]
+    Here:
+       \begin{itemize}
+        \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. $x_{t_n}$ 
+        --- the trade size at $t_n$. $X_{t_n} := $ 
+        \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
+        --- the mid-quote price; $s$ --- the bid–ask spread.
+        \item $F_t$ --- the fundamental value of the security.
+        \item $ D_k = A_k - V_k - \frac{s}{2} $ --- the deviation of current ask price $A_t$ from its steady state level.
+
+       \end{itemize}
+       
     \[ D_{k+1} - D_k = -\rho D_k \Delta t_{k+1} + \alpha x_{k+1} \]
     \[ \Delta t_{k+1} := t_{k+1} - t_k, \; \; \; \; \; D_k := D_{t_k}, \; \; \; \; \; x_{k}:= x_{t_k}, \; \; \; \; \; \Delta D_{k+1} := D_{k+1} - D_k . \]
     \[ V_{k+1} - V_k = \lambda x_{k+1} \rightarrow \Delta D_{k+1} = \Delta A_{k+1} - \lambda x_k \] 
