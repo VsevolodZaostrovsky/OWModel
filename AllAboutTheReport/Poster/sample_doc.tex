@@ -52,10 +52,14 @@
         
        Here:
        \begin{itemize}
-        \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. $x_{t_n}$ 
-        --- the trade size at $t_n = \tau n$, where $\tau = T / N$. $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
-        \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
-        --- the mid-quote price; $s$ --- the bid–ask spread.
+        \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. 
+        \item $x_{t_n}$ 
+        --- the trade size at $t_n = \tau n$, where $\tau = T / N$. 
+        \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
+        \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. 
+        \item $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
+        --- the mid-quote price; 
+        \item $s$ --- the bid–ask spread.
         \item $F_t$ --- the fundamental value of the security.
         % \item $q(P)$ --- the density of limit orders to sell at price $P$.
         \item Parameter $\lambda$ captures the permanent price impact.
@@ -81,7 +85,7 @@
 
     \begin{block}{Optimal execution strategy }
     
-    Proposition 2 from \cite{obizhaeva2013optimal} gives an optimal strategy for big $N$.
+    % Proposition 2 from \cite{obizhaeva2013optimal} gives an optimal strategy for big $N$.
     
     \begin{alertblock}{Optimal execution strategy in OW framework}
         As $N \rightarrow \infty$, the optimal execution strategy becomes:
