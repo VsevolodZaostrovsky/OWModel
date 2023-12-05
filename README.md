@@ -1,7 +1,7 @@
 # OW model
 
 ## Current research: OW model
-**Supervisors**: Anton Filatov, Anton Belyakov
+**Supervisors**: Anton O. Belyakov, Alexey Savin
 **Objectives**:
-1. Implement and validate the Generalized OW Market Impact Model;
-2. Compare it with other MI prediction methods.
+1. Propose methodology for fitting OWM factors and use it to get optimal execution strategy.
+2. Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
