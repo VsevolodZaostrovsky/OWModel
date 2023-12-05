@@ -37,7 +37,7 @@
 
     \begin{block}{Optimal execution problem}
     
-        The idea of that problem is quite simple. If one wants to sell or buy an amount of an asset large enough to have a significant 
+        If one wants to sell or buy an amount of an asset large enough to have a significant 
         impact on the market, he, obviously, should not do it by one order: it would be very expensive, since a large order 
         would remove all the upper levels in the limit order book. Therefore, in practice, all large orders are split into a large number of small ones. 
         For example, one can simply divide an order into N equal parts and sell them at regular intervals (this is called TWAP). 
@@ -63,7 +63,7 @@
         \item $F_t$ --- the fundamental value of the security.
         % \item $q(P)$ --- the density of limit orders to sell at price $P$.
         \item Parameter $\lambda$ captures the permanent price impact.
-        \item Parameter $q$ depends on LOB density. 
+        \item Parameter $q$ is a LOB density. 
         \item $\kappa = \frac{1}{q} - \lambda $
         \item Parameter $\rho$ captures the resiliency.
 
@@ -78,7 +78,7 @@
 
     \begin{block}{Why the OW model?}
         The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
-        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between Obizhaeva's model and others is precisely 
+        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between OW model and others is precisely 
         that resiliency --- the speed at which supply/demand recovers to its steady state after a trade --- plays a key role in it.
     \end{block}
     
@@ -97,20 +97,18 @@
         where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
         period, and $\dot X _t$ is the speed of trading in between these trades.
     \end{alertblock}
-    The key question here is:
     \end{block}
 
-    \begin{block}{How to find $\rho$?}
+    \begin{block}{The key question: how to find $\rho$?}
         
         We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
         that can be calculated from market data. As an example, we are going to consider the regression:
         \begin{alertblock}{Our method to find $\rho$}
-            In regression:
+            By regression:
             \begin{equation*}
                 \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
         = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
             \end{equation*}
-            $\rho$ the same as in OW model.
         \end{alertblock}
     \end{block}
 
@@ -133,8 +131,7 @@
                 \item It seems that the task formulated in the KPI is more indirectly related to the article \cite{obizhaeva2013optimal}
                 than directly. \cite{obizhaeva2013optimal} and \cite{velu2020algorithmic} pose 
                 the problem significantly differently. Similar terminology we have found in \cite{webster2023handbook}, but 
-                we did not find the theory to work with in that framework, although considerable time was devoted to these vain searches.
-                Also, that leaded us to a wrong way and we wasted a lot of time trying to solve the wrong task.
+                we did not find the theory to work with in that framework.
                 \item The data we previously had did not have a sufficient level of detail to extract accurate model values. 
                 It was necessary to make assumptions and results that significantly distorted the final result. 
                 New data will require significant time to parse and research. Anyway, data work is very complicated.
@@ -149,8 +146,8 @@
 
         \begin{block}{Purposes}
         \begin{itemize}
-            \item Learn to work with new data.
-            \item Propose methodology for fitting OWM factors and use it to get optimal execution strategy.
+            \item Develope methodology for fitting OWM factors and use it to get optimal execution strategy.
+            \item Compare deifferent 
             \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
         \end{itemize}
         
