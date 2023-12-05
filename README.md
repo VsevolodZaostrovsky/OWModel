@@ -1,7 +1,7 @@
 # OW model
 
 ## Current research: OW model
-**Supervisors**: Anton O. Belyakov, Alexey Savin
+**Supervisors**: Anton Belyakov, Alexey Savin
 
 **Objectives**:
 1. Propose methodology for fitting OWM factors and use it to get optimal execution strategy.
