@@ -29,9 +29,10 @@
     
     \begin{block}{Introduction}
     
-        Issues related to the structure of the order book are very important for the industry, 
-        so in recent decades a new and interesting science has been built around these issues. In our research, we are looking for a way 
-        to connect the latest advances in this science associated with various variations of the Obizhaeva--Wang model with the needs of industry.
+        The introduction of resiliency --- the speed at which supply/demand recovers to its steady state after 
+        a trade --- characterizes the beginning of a new stage in the development of optimal execution models.
+        In our research we develope a practical way to utilize that knowledge.
+        
     
     \end{block}
 
@@ -62,10 +63,11 @@
         \item $s$ --- the bid–ask spread.
         \item $F_t$ --- the fundamental value of the security.
         % \item $q(P)$ --- the density of limit orders to sell at price $P$.
-        \item Parameter $\lambda$ captures the permanent price impact.
-        \item Parameter $q$ is a LOB density. 
-        \item $\kappa = \frac{1}{q} - \lambda $
-        \item Parameter $\rho$ captures the resiliency.
+        \item $q$, $\lambda$ and $\rho$ is a LOB density, the permanent price impact and the resiliency.
+        % \item Parameter $\lambda$ captures the permanent price impact.
+        % \item Parameter $q$ is a LOB density. 
+         \item $\kappa = \frac{1}{q} - \lambda $
+        % \item Parameter $\rho$ captures the resiliency.
 
        \end{itemize}
         \end{block}
@@ -79,7 +81,7 @@
     \begin{block}{Why the OW model?}
         The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
         much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between OW model and others is precisely 
-        that resiliency --- the speed at which supply/demand recovers to its steady state after a trade --- plays a key role in it.
+        that resiliency plays a key role in it.
     \end{block}
     
 
