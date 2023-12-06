@@ -1,7 +1,7 @@
 \documentclass[]{beamer}
 
 
-\usepackage[scale=0.65, size=custom, width=84, height=64]{beamerposter} 
+\usepackage[scale=0.75, size=custom, width=84, height=64]{beamerposter} 
 \usetheme{vegaposter} 
 
 
@@ -75,21 +75,6 @@
        \end{itemize}
         \end{block}
 
-        \begin{block}{Optimal execution strategy }
-    
-            % Proposition 2 from \cite{obizhaeva2013optimal} gives an optimal strategy for big $N$.
-            
-            \begin{alertblock}{Optimal execution strategy in OW framework}
-                As $N \rightarrow \infty$, the optimal execution strategy becomes:
-                \begin{align*}
-                    & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2}, \\
-                    & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T), \\
-                    & \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2},  \\
-                \end{align*}
-                where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
-                period, and $\dot X _t$ is the speed of trading in between these trades.
-            \end{alertblock}
-            \end{block}
     
     
     \end{column} 
@@ -97,48 +82,51 @@
     
     \begin{column}{\onecolwid} % Begin a column which is two columns wide (column 2)
 
-    
-
-    \begin{block}{The key question: how to find $\rho$?}
+        \begin{block}{The key question: how to find $\rho$?}
         
-        We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
-        that can be calculated from market data. As an example, we are going to consider the regression:
-        \begin{alertblock}{Our method to find $\rho$}
-            \begin{equation*}
-                \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
-        = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
-            \end{equation*}
-        \end{alertblock}
-    \end{block}
+            We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
+            that can be calculated from market data. As an example, we are going to consider the regression:
+            \begin{alertblock}{Our method to find $\rho$}
+                \begin{equation*}
+                    \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
+            = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
+                \end{equation*}
+            \end{alertblock}
+        \end{block}
 
-    \begin{block}{Discrete optimal execution strategy}
-        \begin{alertblock}
-        The solution to the optimal execution problem \eqref{oEproblem} is
-        \begin{equation*}
-            x_n = - \frac{1}{2} \delta_{n + 1} [D_{t_n} (1 - \beta_{n + 1} e^{ - \rho \frac{T}{N}} + 2 \kappa \gamma_{n+1} e^{ - 2 \rho \frac{T}{N}}) 
-            - X_{t_n} (\lambda + 2 \alpha_{n+1} - \beta_{n+1}\kappa e^{ - \rho \frac{T}{N}}) ], 
-        \end{equation*}
-        with $x_N = X_N$ and $Dt ¼ A_t - V_t - s/2$. The expected cost for future trades under the optimal
-        strategy is determined according to
-        \begin{equation*}
-            J_{t_n} = (F_{t_n} + s/2) X_{t_n} + \lambda X_0 X_{t_n} + \alpha_n X_{t_n} ^2 + \beta_{n} D_{t_n} X_{t_n} + \gamma_n D_{t_n}^2, 
-        \end{equation*}
-        where the coefficients $\alpha_{n+1}$, $\beta_{n+1}$, $\gamma_{n+1}$, and $\delta{n+1}$ are determined recursively as follows:
-        \begin{align*}
-            & \alpha_{n} = \alpha_{n+1} - \frac{1}{4} \delta _{n+1} (\lambda + 2 \alpha_{n+1} - \beta_{n+1} \kappa e^{- \rho \tau})^2, \\
-            & \beta_{n} =  \beta_{n+1} e^{- \rho \tau}  + \frac{1}{2} \delta _{n+1} (1 - \beta_{n+1} e^{- \rho \tau} 
-                + 2 \kappa \gamma_{n+1} e^{- 2 \rho \tau}) (\lambda + 2 \alpha_{n+1} - \beta_{n+1} \kappa e^{-\rho \tau}), \\
-            & \gamma_n =   \gamma{n+1} e^{- 2 \rho \tau} - \frac{1}{4} \delta _{n+1} (1 - \beta _{n+1} e^{- \rho \tau} + 2 \gamma _{n+1} \kappa e^{- 2 \rho \tau})^2,
+        \begin{block}{Optimal execution strategies }
+            Using the fitted parameter $\rho$, now we are able to execute the limit of the following strategy.
+            To fit the discrete variant one needs more parameters and more regression. 
 
-        \end{align*}
-        with $\delta_{n+1} = [1/(2q) + \alpha_{n+1} - \beta_{n+1} \kappa e^{-\rho \tau} + \gamma _{n+1} \kappa ^2 e^{- 2 \rho \tau}]^{-1}$ and terminal conditions
-        \begin{equation*}
-            \alpha_{N} = 1/(2q) - \lambda, \;\;\;\;\;\;\; \beta_N = 1, \;\;\;\;\;\;\; \gamma_N = 0.
-        \end{equation*}
-    \end{alertblock}
-
-    \end{block}
-
+            \begin{alertblock}{Discrete optimal execution strategy}
+                The solution to the optimal execution problem is
+                \begin{equation*}
+                    x_n = - \frac{1}{2} \delta_{n + 1} [D_{t_n} (1 - \beta_{n + 1} e^{ - \rho \frac{T}{N}} + 2 \kappa \gamma_{n+1} e^{ - 2 \rho \frac{T}{N}}) 
+                    - X_{t_n} (\lambda + 2 \alpha_{n+1} - \beta_{n+1}\kappa e^{ - \rho \frac{T}{N}}) ], 
+                \end{equation*}
+                with $x_N = X_N$ and $Dt ¼ A_t - V_t - s/2$. The expected cost for future trades under the optimal
+                strategy is determined according to
+                \begin{equation*}
+                    J_{t_n} = (F_{t_n} + s/2) X_{t_n} + \lambda X_0 X_{t_n} + \alpha_n X_{t_n} ^2 + \beta_{n} D_{t_n} X_{t_n} + \gamma_n D_{t_n}^2, 
+                \end{equation*}
+                where the coefficients $\alpha_{n+1}$, $\beta_{n+1}$, $\gamma_{n+1}$, and $\delta{n+1}$ are determined recursively as follows:
+                \begin{align*}
+                    & \alpha_{n} = \alpha_{n+1} - \frac{1}{4} \delta _{n+1} (\lambda + 2 \alpha_{n+1} - \beta_{n+1} \kappa e^{- \rho \tau})^2, \\
+                    & \beta_{n} =  \beta_{n+1} e^{- \rho \tau}  + \frac{1}{2} \delta _{n+1} (1 - \beta_{n+1} e^{- \rho \tau} 
+                        + 2 \kappa \gamma_{n+1} e^{- 2 \rho \tau}) (\lambda + 2 \alpha_{n+1} - \beta_{n+1} \kappa e^{-\rho \tau}), \\
+                    & \gamma_n =   \gamma{n+1} e^{- 2 \rho \tau} - \frac{1}{4} \delta _{n+1} (1 - \beta _{n+1} e^{- \rho \tau} 
+                + 2 \gamma _{n+1} \kappa e^{- 2 \rho \tau})^2, \\
+                \end{align*}
+                with $\delta_{n+1} = [1/(2q) + \alpha_{n+1} - \beta_{n+1} \kappa e^{-\rho \tau} + \gamma _{n+1} \kappa ^2 e^{- 2 \rho \tau}]^{-1}$ and terminal conditions
+                \begin{equation*}
+                    \alpha_{N} = 1/(2q) - \lambda, \;\;\;\;\;\;\; \beta_N = 1, \;\;\;\;\;\;\; \gamma_N = 0.
+                \end{equation*}
+            \end{alertblock}
+    
+            % Proposition 2 from \cite{obizhaeva2013optimal} gives an optimal strategy for big $N$.
+            
+            \end{block}
+    
    
     
     %----------------------------------------------------------------------------------------
@@ -153,11 +141,22 @@
         %	CONCLUSION
         %----------------------------------------------------------------------------------------
         
+        \begin{alertblock}{Limit of the discrete optimal execution strategy}
+            As $N \rightarrow \infty$, the optimal execution strategy becomes:
+            \begin{align*}
+                & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2}, \\
+                & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T), \\
+                & \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2},  \\
+            \end{align*}
+            where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
+            period, and $\dot X _t$ is the speed of trading in between these trades.
+        \end{alertblock}
+
         \begin{block}{Problems}
             \begin{itemize}
-                \item It seems that the task formulated in the KPI is more indirectly related to the article \cite{obizhaeva2013optimal}
-                than directly. \cite{obizhaeva2013optimal} and \cite{velu2020algorithmic} pose 
-                the problem significantly differently. Similar terminology we have found in \cite{webster2023handbook}, but 
+                \item The task formulated in the KPI is not directly related to the article \cite{obizhaeva2013optimal}. 
+                \cite{obizhaeva2013optimal} and \cite{velu2020algorithmic} pose the problem significantly differently. 
+                Similar terminology we have found in \cite{webster2023handbook}, but 
                 we did not find the theory to work with in that framework.
                 \item The data we previously had did not have a sufficient level of detail to extract accurate model values. 
                 It was necessary to make assumptions that significantly distorted the final result. 
@@ -174,8 +173,10 @@
         \begin{block}{Purposes}
         \begin{itemize}
             \item Develope methodology for fitting OWM factors and use it to get optimal execution strategy.
-            \item Compare different approaches to measuring resiliency on l3 data.
-            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
+            \item Compare different approaches of measuring resiliency on l3 data.
+            \item Compare discrete and limit OW execution strategy.
+            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP
+            on real market data.
         \end{itemize}
         
         \end{block}
