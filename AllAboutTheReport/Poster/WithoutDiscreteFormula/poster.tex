@@ -107,7 +107,7 @@
         We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
         that can be calculated from market data. As an example, we are going to consider the regression:
         \begin{alertblock}{Our method to find $\rho$}
-            % By regression:
+            % By regression:                                                                                                                                                                                                                                                                                                                                                                                        
             \begin{equation*}
                 \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
         = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
@@ -116,8 +116,8 @@
 
         Where all the information needed can be extracted from the l3 data: 
         \begin{itemize}
-            \item $\Delta A_{k+2}$ is an ask change after execution of the limit order with the depth $x_k$.
-            \item $\Delta t_{k+2}$ is a time time between two adjacent orders of dataset.
+            \item $\Delta A_{k}$ is an ask change after execution of the limit order with the depth $x_k$.
+            \item $\Delta t_{k}$ is a time between $k$ and $k + 1$ orders of dataset.
         \end{itemize}
         % $\Delta A_{k+2}$ is an ask change after execution of the limit order with the depth $x_k$ 
         %     and $\Delta t_{k+2}$ is a time time between two adjacent orders of dataset.
