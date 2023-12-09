@@ -46,27 +46,27 @@
         If one wants to sell or buy an amount of an asset large enough to have a significant 
         impact on the market, he, obviously, should not do it by one order: it would be very expensive, since a large order 
         would remove all the upper levels in the limit order book. Therefore, in practice, all large orders are split into a large number of small ones. 
-        For example, one can simply divide an order into N equal parts and sell them at regular intervals (this is called TWAP). 
+        For example, one can simply divide an order into $N$ equal parts and sell them at regular intervals (this is called TWAP). 
         To find a better solution, we consider the OW model, in which terms the problem has the following form: \par  
 
 
         
         \begin{align} \label{optexp}
            J_0 &= \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
-           A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)}.
+           A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)},
         \end{align}
         
-       Here:
+       where:
        \begin{itemize}
-        \item The trader has to buy $\mathbf{X_0}$ units of a security over a fixed time period $[0,T]$. 
+        \item The trader has to buy $\mathbf{X_0}$ units of a security over a fixed time period $[0,T]$; 
         \item $x_{t_n}$ 
-        --- the trade size at $t_n = \tau n$, where $\tau = T / N$. 
-        \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
-        \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. 
+        is the trade size at $t_n = \tau n$, where $\tau = T / N$;
+        \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$;
+        \item $B_{t_n}$ and $A_{t_n}$ are bid and ask prices at $t_n$; 
         \item $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
-        --- the mid-quote price; 
-        \item $s$ --- the bid–ask spread.
-        \item $F_t$ --- the fundamental value of the security.
+        is the mid-quote price; 
+        \item $s$ is the bid–ask spread;
+        \item $F_t$ is the fundamental value of the security;
         % \item $q(P)$ --- the density of limit orders to sell at price $P$.
         \item $q$, $\lambda$ and $\rho$ is a LOB density, the permanent price impact and the resiliency. $\kappa = \frac{1}{q} - \lambda $
         % \item Parameter $\lambda$ captures the permanent price impact.
@@ -157,12 +157,12 @@
             \end{block}
 
 
-        \begin{block}{Purposes}
+        \begin{block}{Objectives}
         \begin{itemize}
-            \item develop methodology for fitting OWM factors and use it to get optimal execution strategy.
+            \item Develop methodology for fitting OWM parameters and use it to get optimal execution strategy. 
             \item Compare different approaches of measuring resiliency on l3 data.
             \item Compare discrete and limit OW execution strategies.
-            \item Propose a backtest procedure for the optimal execution algorithm, implement it, and compare the algorithm with TWAP.
+            \item Propose a backtest procedure for the optimal execution algorithm, implement it, and compare the algorithm with TWAP
             on real market data.
         \end{itemize}
         
