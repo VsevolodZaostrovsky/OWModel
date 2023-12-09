@@ -1,0 +1,186 @@
+\documentclass[]{beamer}
+
+
+\usepackage[scale=0.85, size=custom, width=84, height=64]{beamerposter} 
+\usetheme{vegaposter} 
+
+
+\addbibresource{refs.bib}
+\usepackage{lipsum}
+
+\title{Optimal execution problem in Obizhaeva--Wang framework}
+\author{Vsevolod Zaostrovsky, Peter Shkenev}
+\supervisor{Anton Belyakov, Alexey Savin}
+\researchgroup{Market Microstructure}
+
+\begin{document}
+\nocite{*} % This is needed to make sure that all references are included in the bibliography
+
+\begin{frame}[t]
+    \begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
+     
+    \begin{column}{\lrmargin}\end{column} % Empty spacer column
+    
+    \begin{column}{\onecolwid} % The first column
+     
+    %----------------------------------------------------------------------------------------
+    %	INTRODUCTION
+    %----------------------------------------------------------------------------------------
+    
+    \begin{block}{Introduction}
+    
+        The introduction of resiliency --- the speed at which supply/demand recovers to its steady state after 
+        a trade --- characterizes the beginning of a new stage in the development of optimal execution models.
+        In our research we develope a practical way to utilize that knowledge. 
+        The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
+        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between OW model and others is precisely 
+        that resiliency plays a key role in it.
+        
+    
+    \end{block}
+
+    \begin{block}{Optimal execution problem}
+    
+        If one wants to sell or buy an amount of an asset large enough to have a significant 
+        impact on the market, he, obviously, should not do it by one order: it would be very expensive, since a large order 
+        would remove all the upper levels in the limit order book. Therefore, in practice, all large orders are split into a large number of small ones. 
+        For example, one can simply divide an order into N equal parts and sell them at regular intervals (this is called TWAP). 
+        To find a better solution, we consider the OW model, in which terms the problem has the following form: \par  
+
+
+        
+        \begin{align} \label{optexp}
+           J_0 &= \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
+           A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)}.
+        \end{align}
+        
+       Here:
+       \begin{itemize}
+        \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. 
+        \item $x_{t_n}$ 
+        --- the trade size at $t_n = \tau n$, where $\tau = T / N$. 
+        \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
+        \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. 
+        \item $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
+        --- the mid-quote price; 
+        \item $s$ --- the bid–ask spread.
+        \item $F_t$ --- the fundamental value of the security.
+        % \item $q(P)$ --- the density of limit orders to sell at price $P$.
+        \item $q$, $\lambda$ and $\rho$ is a LOB density, the permanent price impact and the resiliency. $\kappa = \frac{1}{q} - \lambda $
+        % \item Parameter $\lambda$ captures the permanent price impact.
+        % \item Parameter $q$ is a LOB density. 
+        %  \item $\kappa = \frac{1}{q} - \lambda $
+        % \item Parameter $\rho$ captures the resiliency.
+
+       \end{itemize}
+        \end{block}
+    
+    
+    \end{column} 
+    \begin{column}{\sepwid}\end{column} % Empty spacer column
+    
+    \begin{column}{\onecolwid} % Begin a column which is two columns wide (column 2)
+    
+
+    \begin{block}{Optimal execution strategy }
+    
+    Proposition 2 from \cite{obizhaeva2013optimal} gives a solution to the optimal execution problem 
+    \eqref{optexp}. The first step of our research is implemeting the following fornula (that is a 
+    limit of discrete solution which may be used for big $N$). 
+    The next step is implementing of the discrete solution and considering thoose 
+    strtegies.
+    
+    \begin{alertblock}{The limit of the optimal execution strategy in OW framework}
+        As $N \rightarrow \infty$, the optimal execution strategy becomes:
+        \begin{align*}
+            & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2}, \\
+            & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T), \\
+            & \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2},  \\
+        \end{align*}
+        where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
+        period, and $\dot X _t$ is the speed of trading in between these trades.
+    \end{alertblock}
+    \end{block}
+
+    \begin{block}{The key question: how to find $\rho$?}
+        
+        We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
+        that can be calculated from market data. As an example, we are going to consider the regression:
+        \begin{alertblock}{Our method to find $\rho$}
+            % By regression:
+            \begin{equation*}
+                \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
+        = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
+            \end{equation*}
+        \end{alertblock}
+
+        Where all the information needed can be extracted from the l3 data: 
+        \begin{itemize}
+            \item $\Delta A_{k+2}$ is an ask change after execution of the limit order with the depth $x_k$.
+            \item $\Delta t_{k+2}$ is a time time between two adjacent orders of dataset.
+        \end{itemize}
+        % $\Delta A_{k+2}$ is an ask change after execution of the limit order with the depth $x_k$ 
+        %     and $\Delta t_{k+2}$ is a time time between two adjacent orders of dataset.
+    \end{block}
+
+   
+    
+    %----------------------------------------------------------------------------------------
+    \end{column}
+    
+    
+    \begin{column}{\sepwid}\end{column} % Empty spacer column
+    
+    \begin{column}{\onecolwid} % The third column
+    
+        %----------------------------------------------------------------------------------------
+        %	CONCLUSION
+        %----------------------------------------------------------------------------------------
+        
+        \begin{block}{Problems}
+            \begin{itemize}
+                \item The task formulated in the KPI is not directly related to the article \cite{obizhaeva2013optimal}. 
+                \cite{obizhaeva2013optimal} and \cite{velu2020algorithmic} pose 
+                the problem significantly differently. Similar terminology we have found in \cite{webster2023handbook}, but 
+                we did not find the theory to work with in that framework.
+                \item The data we previously had did not have a sufficient level of detail to extract accurate model values. 
+                It was necessary to make assumptions and results that significantly distorted the final result. 
+                New data will require significant time to parse and research. Anyway, data work is very complicated.
+                \item This area is very rich and complicated. It is very hard to do even easy steps in the theoretical research, 
+                because we did not have courses on that theory. 
+                
+            \end{itemize}
+
+            
+            \end{block}
+
+
+        \begin{block}{Purposes}
+        \begin{itemize}
+            \item Develope methodology for fitting OWM factors and use it to get optimal execution strategy.
+            \item Compare different approaches of measuring resiliency on l3 data.
+            \item Compare discrete and limit OW execution strategy.
+            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP
+            on real market data.
+        \end{itemize}
+        
+        \end{block}
+        
+        %----------------------------------------------------------------------------------------
+        %	REFERENCES
+        %----------------------------------------------------------------------------------------
+        
+        \begin{block}{References}
+        
+    %    \nocite{*} % Insert publications even if they are not cited in the poster
+        \printbibliography \vspace{0.75in}
+        
+        \end{block}
+        
+        \end{column} % End of the third column
+    
+    \begin{column}{\lrmargin}\end{column} % Empty spacer column
+    
+    \end{columns} % End of all the columns in the poster
+    \end{frame} % End of the enclosing frame
+\end{document}
