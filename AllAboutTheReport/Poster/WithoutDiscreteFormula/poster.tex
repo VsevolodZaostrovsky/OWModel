@@ -32,7 +32,7 @@
         The introduction of resiliency --- the speed at which supply/demand recovers to its steady state after 
         a trade --- characterizes the beginning of a new stage in the development of optimal execution models.
         In our research we develope a practical way to utilize that knowledge. 
-        The supply/demand of ﬁnancial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
+        The supply/demand of financial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
         much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between OW model and others is precisely 
         that resiliency plays a key role in it.
         
@@ -56,7 +56,7 @@
         
        Here:
        \begin{itemize}
-        \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. 
+        \item The trader has to buy $\mathbf{X_0}$ units of a security over a fixed time period $[0,T]$. 
         \item $x_{t_n}$ 
         --- the trade size at $t_n = \tau n$, where $\tau = T / N$. 
         \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
@@ -85,10 +85,10 @@
     \begin{block}{Optimal execution strategy }
     
     Proposition 2 from \cite{obizhaeva2013optimal} gives a solution to the optimal execution problem 
-    \eqref{optexp}. The first step of our research is implemeting the following fornula (that is a 
+    \eqref{optexp}. The first step of our research is implementing the following formula (that is a 
     limit of discrete solution which may be used for big $N$). 
-    The next step is implementing of the discrete solution and considering thoose 
-    strtegies.
+    The next step is implementing of the discrete solution and considering those 
+    strategies.
     
     \begin{alertblock}{The limit of the optimal execution strategy in OW framework}
         As $N \rightarrow \infty$, the optimal execution strategy becomes:
@@ -160,7 +160,7 @@
             \item Develope methodology for fitting OWM factors and use it to get optimal execution strategy.
             \item Compare different approaches of measuring resiliency on l3 data.
             \item Compare discrete and limit OW execution strategy.
-            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP
+            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
             on real market data.
         \end{itemize}
         
