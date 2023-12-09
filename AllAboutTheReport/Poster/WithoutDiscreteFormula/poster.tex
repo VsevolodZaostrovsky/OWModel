@@ -31,9 +31,11 @@
     
         The introduction of resiliency --- the speed at which supply/demand recovers to its steady state after 
         a trade --- characterizes the beginning of a new stage in the development of optimal execution models.
-        In our research we develope a practical way to utilize that knowledge. 
-        The supply/demand of financial securities is in general not perfectly elastic. This fact is true even for liquid European markets, if we talk about 
-        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between OW model and others is precisely 
+        In our research we develop a practical way to utilize that concept. 
+        The supply/demand of financial securities is in general not perfectly elastic. This fact is true even for liquid European markets. 
+        If we talk about 
+        much less liquid Russian markets, neglecting this fact can be disastrous. The main difference between OW model 
+        and others is precisely 
         that resiliency plays a key role in it.
         
     
@@ -86,8 +88,8 @@
     
     Proposition 2 from \cite{obizhaeva2013optimal} gives a solution to the optimal execution problem 
     \eqref{optexp}. The first step of our research is implementing the following formula (that is a 
-    limit of discrete solution which may be used for big $N$). 
-    The next step is implementing of the discrete solution and considering those 
+    limit of a discrete solution, which may be used for big $N$). 
+    The next step is implementing the discrete solution and considering those 
     strategies.
     
     \begin{alertblock}{The limit of the optimal execution strategy in OW framework}
@@ -104,7 +106,7 @@
 
     \begin{block}{The key question: how to find $\rho$?}
         
-        We provide our methodology to find $\rho$. We find it, considering time series on elements of the model 
+        We provide our methodology to find $\rho$. We find it, considering the time series of elements of the model 
         that can be calculated from market data. As an example, we are going to consider the regression:
         \begin{alertblock}{Our method to find $\rho$}
             % By regression:                                                                                                                                                                                                                                                                                                                                                                                        
@@ -157,10 +159,10 @@
 
         \begin{block}{Purposes}
         \begin{itemize}
-            \item Develope methodology for fitting OWM factors and use it to get optimal execution strategy.
+            \item develop methodology for fitting OWM factors and use it to get optimal execution strategy.
             \item Compare different approaches of measuring resiliency on l3 data.
-            \item Compare discrete and limit OW execution strategy.
-            \item Propose a backtest procedure for the optimal execution algorithm, implement it and compare the algorithm with TWAP.
+            \item Compare discrete and limit OW execution strategies.
+            \item Propose a backtest procedure for the optimal execution algorithm, implement it, and compare the algorithm with TWAP.
             on real market data.
         \end{itemize}
         
