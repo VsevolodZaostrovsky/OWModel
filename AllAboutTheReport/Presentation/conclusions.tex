@@ -55,7 +55,7 @@
 
 \end{frame}
 
-\begin{frame}{Formalization of the problem}
+\begin{frame}{Formalization of the problem in the discrete time}
     \begin{align} \label{optexp}
         J_0 &= \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right], 
         % A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)},
@@ -65,7 +65,7 @@
     \begin{itemize}
      \item The trader has to buy $X_0$ units of a security over a fixed time period $[0,T]$; 
      \item $x_{n}$ 
-     is the trade size at $t_n = \tau n$, where $\tau = T / N$ and $\sum x_n = X_0$;
+     is the market order size at $t_n = \tau n$, where $\tau = T / N$ and $\sum x_n = X_0$;
     %  \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$;
      \item $A_{t_n}$ is an ask price at $t_n$; 
     %  \item $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
@@ -94,9 +94,8 @@
 
 \end{frame}
 
-\begin{frame}{How to find $\rho$?}
-    We provide our methodology to find $\rho$. We find it, considering the time series of elements of the model 
-    that can be calculated from market data. As an example, we are going to consider the regression:                                                                                                                                                                                                                                                                                                                                                                                        
+\begin{frame}{Our methodology to fit parameters?}
+    We chose regression to find parameters:                                                                                                                                                                                                                                                                                                                                                                                       
             \begin{equation*}
                 \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
         = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
@@ -111,8 +110,7 @@
 
 \begin{frame}{Research plan}
     \begin{itemize}
-        \item Develop methodology for fitting OWM paramete  rs and use it to get optimal execution strategy. 
-        \item Help to parse l3 data.
+        \item Develop methodology for fitting OWM parameters and use it to get optimal execution strategy. 
         \item Compare different approaches of measuring resiliency on l3 data.
         \item Compare discrete and limit OW execution strategies.
         \item Propose a backtest procedure for the optimal execution algorithm, implement it, and compare the algorithm with TWAP
