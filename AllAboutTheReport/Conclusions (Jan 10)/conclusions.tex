@@ -1,0 +1,34 @@
+\documentclass[aspectratio=169]{beamer}
+
+% \renewcommand{\textSupervisors}    {Supervisors}
+
+\usetheme{vega}
+
+\title{Optimal execution problem in Obizhaeva--Wang framework}
+\subtitle{SRG Market microstructure}
+\author{Vsevolod Zaostrovsky, Peter Shkenev}
+\institute{Vega Institute Foundation}
+\supervisor{Anton Belyakov, Alexey Savin}
+% \date{August 21 -- 28, 2022}
+
+\usepackage[]{lipsum}
+\begin{document}
+\maketitle
+
+\begin{frame}{Our methodology to fit parameters $\rho, \kappa, q$}
+    We chose regression to find parameters:                                                                                                                                                                                                                                                                                                                                                                                       
+            \begin{equation*}
+                \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
+        = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
+            \end{equation*}
+
+        Where all the information needed can be extracted from the l3 data: 
+        \begin{itemize}
+            \item $\Delta A_{k}$ is an ask change after execution of the limit order with the depth $x_k$.
+            \item $\Delta t_{k}$ is a time between $k$ and $k + 1$ orders of dataset.
+        \end{itemize}
+\end{frame}
+
+
+
+\end{document}

@@ -52,5 +52,6 @@ backup.py
 *.pyc
 *.pygtex
 *.pygstyle
+*.txt
 
 _minted-*
