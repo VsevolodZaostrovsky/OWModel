@@ -296,7 +296,7 @@ impl OrderBook
                 // write!(file_l2_bid, "{} Price {} Vol {} \n", line.BUYSELL, line.PRICE, line.VOLUME).expect("TODO: panic message");
                 // write!(file_l2_ask, "{} Price {} Vol {} \n", line.BUYSELL, line.PRICE, line.VOLUME).expect("TODO: panic message");
 
-                if line.ACTION == 2 && line.VOLUME > 50000  {
+                if line.ACTION == 2 {
                     if line.BUYSELL == "B" {
                         self.l2_print_to_file(file_l2_bid, file_l2_ask);
                         write!(file_l2_bid, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
