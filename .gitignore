@@ -54,4 +54,6 @@ backup.py
 *.pygstyle
 *.txt
 
+target
+
 _minted-*
