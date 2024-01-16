@@ -12,7 +12,7 @@ fn from_file(filename: &str, instrument: String, price_step: f64) {
 fn main()
 {
     // from_file("data/OrderLog20200103.txt", "GBPRUB_TOM".to_string(), 0.001);
-    from_file("data/OrderLog20200103.txt", "USD000UTSTOM".to_string(), 0.001);
+    from_file("../data/OrderLog20200103.txt", "USD000UTSTOM".to_string(), 0.001);
     // from_file("data/OrderLog20200103.txt", "SLVRUB_TOM".to_string(), 0.001);
     // from_file("data/OrderLog20200103.txt", "CHFRUB_TOM".to_string(), 0.001);
     // from_file("data/OrderLog20200103.txt", "HKDRUB_TOM".to_string(), 0.001);
