@@ -127,7 +127,7 @@ Thus, we have an explicit form of optimal execution strategy, but to use and imp
 $\rho, \kappa$ and $\lambda$. And it is not obvious how to do that.
 
 
-\section{Our methodology to find the factors}
+\section{How to find the factors}
 
 We provide our methodology to find $\rho$. We find it, considering the time series of elements of the model 
 that can be calculated from market data. As an example, we are going to consider the regression:
@@ -141,8 +141,19 @@ that can be calculated from market data. As an example, we are going to consider
         describing by series $A_k, \Delta t _k, x_k$.
 \end{theorem}
 
-        Here all the information needed can be extracted from the l3 data: 
-        \begin{itemize}
-            \item $\Delta A_{k}$ is an ask change after execution of the limit order with the depth $x_k$.
-            \item $\Delta t_{k}$ is a time between $k$ and $k + 1$ orders of dataset.
-        \end{itemize}
+Here all the information needed can be extracted from the l3 data: 
+\begin{itemize}
+    \item $\Delta A_{k}$ is an ask change after execution of the limit order with the depth $x_k$.
+    \item $\Delta t_{k}$ is a time between $k$ and $k + 1$ orders of dataset.
+\end{itemize}
+
+Another idea is to consider leveling the dynamics-setting ask after a large order:
+\begin{equation*}
+        A_t = \overline p _t + \frac{s}{2} + x_1 \kappa e^{- \rho t}.
+\end{equation*}
+This idea looks good, but it is very hard numerically: we tested several different approaches related to this idea, but we were unable 
+to extract adequate parameters.
+
+
+\section{Data preparing}
+

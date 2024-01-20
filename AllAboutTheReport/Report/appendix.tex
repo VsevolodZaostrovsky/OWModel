@@ -18,9 +18,9 @@
         
         Here:
         \begin{itemize}
-         \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. $x_{t_n}$ 
-         --- the trade size at $t_n$.
-         \item $A_{t_n}$ --- ask price at $t_n$. 
+         \item $x_{k}$ 
+         --- the trade size at $t_k$.
+         \item $A_{k}$ --- ask price at $t_k$. 
         \end{itemize}
 
 \end{theorem}
@@ -37,10 +37,10 @@
         \end{equation}
 
         From \eqref{rp1} and \eqref{rp3}:
-        \begin{align} \label{rp3}
+        \begin{align*}
                 & D_k = \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)} \\
                 & \Delta D_k = \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)} - \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)}
-        \end{align}
+        \end{align*}
 
 
         \[ D_{k+1} - D_k = A_{k+1} + V_{k+1} - A_{k} - V_{k} = -\rho D_k \Delta t_{k+1} + \lambda x_{k} \]
