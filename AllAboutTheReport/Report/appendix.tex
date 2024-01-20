@@ -3,55 +3,77 @@
 
 
 
-	\section{Justification of the method}
+	\section{Обоснование метода}
         
         \begin{theorem}
-                To simplify the notation, consider:
-        \[ \Delta t_{k+1} := t_{k+1} - t_k, \; \; \; \; \; D_k := D_{t_k}, \; \; \; \; \; x_{k}:= x_{t_k}, \; \; \; \; \; \Delta D_{k+1} := D_{k+1} - D_k . \]
-                In the regression:                                                                                                                                                                                                                                                                                                                                                                                        
+                В регрессии                                                                                                                                                                                                                                                                                                                                                                                       
                 \begin{equation*}
-                    \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
-                = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
+                        \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}}
+                        = -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + 
+                        (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right),
                 \end{equation*}
-                the coefficients $\rho, \kappa$ and $\lambda$ the same as in OW model describes the market with dynamics
-                describing by series $A_k, \Delta t _k, x_k$.
+                где $x_{k}$ и $A_{k}$ глубина ордера и аск в момент времени $t_k$, соответственно. \\
+
+                коэффициенты $\rho, \kappa$ и $\lambda$ те же, что в модели Обижаевой--Ванга, описывающей рынок,
+                характеризуемый временными рядами: $A_k, \Delta t _k, x_k$.
         
-        Here:
-        \begin{itemize}
-         \item $x_{k}$ 
-         --- the trade size at $t_k$.
-         \item $A_{k}$ --- ask price at $t_k$. 
-        \end{itemize}
+
 
 \end{theorem}
 \begin{proof}
-        From the definitions of the model follows three equations:
+        Из определения модели имеем три уравнения:
         \begin{equation} \label{rp1}
-                A_k = V_k + \frac{s}{2} + \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)}
+                A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
         \end{equation}
         \begin{equation}\label{rp2}
-                V_{k+1} = V_k + \lambda x_k \rightarrow V_{k+1} - V_k = \lambda x_{k}
+                V_{t_{k+1}} = V_{t_k} + \lambda x_{t_k} \rightarrow V_{t_{k+1}} - V_{t_k} = \lambda x_{t_{k}}
         \end{equation}
         \begin{equation} \label{rp3}
-                D_k = A_k - V_k - \frac{s}{2}
+                D_{t_k} = A_{t_k} - V_{t_k} - \frac{s}{2}
         \end{equation}
 
-        From \eqref{rp1} and \eqref{rp3}:
+        Из \eqref{rp1} и \eqref{rp3},
         \begin{align*}
-                & D_k = \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)} \\
-                & \Delta D_k = \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)} - \sum _{i=0} ^k x_i \kappa e^{- \rho (k - i)}
+                D_{t_k} &= \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} \\
+                \Delta D_{t_k} &= \sum _{i=0} ^k x_{t_i} \kappa e^{- \rho (t_{k+1} - t_i)} 
+                - \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
+                = \sum _{i=0} ^{k - 1} x_{t_i} \kappa (e^{- \rho (t_{k+1} - t_i)} - e^{- \rho (t_k - t_i)})
+                + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = \\
+                &= \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} (e^{- \rho (t_{k+1} - t_k)} - 1)
+                + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = 
+                [\textrm{полагая, что $e^{- \rho (t_{k +1} - t_k)} = 1 - \rho (t_{k+1} - t_k)$}] = \\
+                &=\sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} ((1 - \rho (t_{k+1} - t_k)) - 1)
+                + x_{t_k} \kappa (1 - \rho (t_{k+1} - t_k)) 
+                = - \rho \Delta t_{k} D_{t_k} + x_{t_k} \kappa (1 - \rho \Delta t_{k}).
         \end{align*}
 
+        С другой стороны, из \eqref{rp2} и \eqref{rp3} имеем
 
-        \[ D_{k+1} - D_k = A_{k+1} + V_{k+1} - A_{k} - V_{k} = -\rho D_k \Delta t_{k+1} + \lambda x_{k} \]
-        \[ V_{k+1} - V_k = \lambda x_{k} \rightarrow \Delta D_{k+1} = \Delta A_{k+1} - \lambda x_k \] 
-        \[ \frac{\Delta D_{k+1}}{\Delta t_{k+1}} = - \rho D_k + \kappa \frac{x_{k+1}}{\Delta t_{k+1}} \] 
-        \[ \frac{\Delta D_{k+2}}{\Delta t_{k+2}} - \frac{\Delta D_{k+1}}{\Delta t_{k+1}} 
-            = - \rho \Delta D_{k+1} + \kappa ( \frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}) \] 
-        
-        \[ \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
-            = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}) \] 
-       
+        \begin{equation*}
+                \Delta D_k = D_{k+1} - D_k = A_{k+1} + V_{k+1} - A_{k} - V_{k} = \Delta A_k - \Delta V_k \rightarrow \Delta A_k = \Delta D_k + \Delta V_k .
+        \end{equation*}
+
+        Таким образом, получаем уравнение
+        \begin{equation*}
+                \Delta A_k = - \rho \Delta t_{k} D_{t_k} + x_{t_k} \kappa (1 - \rho \Delta t_{k}) + \lambda x_{t_k} .
+        \end{equation*} 
+
+        Исключим из него ряд $D_{t_k}$, поделив предыдущее уравнение на $\Delta t_k$ и рассмотрим разность 
+        $A_{t_{k+1}}$ и $A_{t_{k}}$:
+
+        \begin{align*}
+                \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} 
+                &=- \rho D_{t_{k+1}} + x_{t_{k+1}} \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
+                 + \rho D_{t_{k}}   - x_{t_{k}}   \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \lambda \frac{x_{t_k}}    {\Delta t_{k}} = \\
+                &= -\rho (\Delta A_k - \Delta V_k) + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) - \rho \kappa (x_{t_{k+1}} - x_{t_{k}})= \\
+                &= -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+        \end{align*} 
+
+        % Наконец, мы получили искомое уравнение
+        % \begin{equation*}
+        %         \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = 
+        %         -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+        % \end{equation*}
 
 \end{proof}
 	

@@ -2,43 +2,47 @@
 % https://www.overleaf.com/learn/latex/Management_in_a_large_project#Using_the_import_package
 % You also can see an example at line n.16.
 
-\section{Basic concepts}
-We start with considering the Limit Order Book (LOB) structure. Within this paradigm of organizing an exchange, 
-each person with access to trading has two opportunities: 
+\section{Основные понятия}
+Определим несколько понятий, которые понадобятся нам в дальнейшем.
+\begin{definition}
+    \textbf{Бид} (bid) --- это самая высокая цена, которую покупатель готов заплатить за актив. 
+    Далее, бид в момент времени $t$ будет обозначаться $B_t$.
+    \textbf{Аск} (ask) --- это самая низкая цена, за которую продавец готов предоставить актив. 
+    Далее, аск в момент времени $t$ будет обозначаться $B_t$.
+    \textbf{Бид-аск спрэд} (bid–ask spread) $s$: $s = A_t - B_t$.
+    \textbf{Мид} (mid-quote price): $V_{t} = \frac{A_{t} + B_{t}}{2}$.
+\end{definition}
+Начнем с рассмотрения структуры лимитной книги заявок (Limit Order Book -- LOB). 
+В рамках этой парадигмы организации биржевых торгов, у каждого участника есть две возможности:
 \begin{itemize}
-    \item to express a desire to buy or sell a certain number of units of an asset at a price. In this case, the 
-    exchange will "remember" his desire. The set of price-quantity pairs of assets can be aggregated by price levels and 
-    depicted as at \ref{LOBpic}.
-    \item to express a desire to buy or sell a certain number of units of an asset immediately. In this case, he will 
-    be offered the required number of shares at the best possible price. For example, in the case of a purchase, 
-    orders from the price level corresponding to the best price are first matched. If there are not enough shares 
-    at that level to fill the order, the next shares are taken from the next price level and so on.
+    \item выразить желание купить или продать определённое количество единиц актива по определенной цене. 
+    В этом случае, биржа запомнит пару цена--количество. Множество этих пар составляет 
+    лимитную книгу заявок. На рисунке \ref{LOBpic} изображено традиционное представление лимитной
+    книги заявок.
+    \item выразить желание купить или продать определённое количество единиц актива немедленно. 
+    В этом случае он немедленно получит запрошенное количество акций (если на бирже есть необходимое количество)
+    по лучшей возможной цене: к примеру, в случае покупки, если на верхнем ценовом уровне не будет достаточного
+    количества единиц актива для удовлетворения заявки, то будут взяты активы из следующего ценового уровня.
+    Таким образом, не гарантируется, что итоговая цена одной единицы актива будет совпадать с аском.
     
 \end{itemize}
 
 \begin{figure}
     \includegraphics[scale=0.8]{fig/Graphical-representation-of-the-Limit-Order-Book.png}
-    \caption{Graphical representation of the Limit Order Book}
+    \caption{Графическое представление лимитной книги заявок}
     \label{LOBpic}
 \end{figure}
 
 
 
-So, in general, there exist 
-two types of interaction with the exchange:
+Таким образом, если опустить некоторые подробности, существует два вида заявок:
 \begin{definition}
-    A \textbf{limit order} is an order to buy or sell a security at a specific price or better. This type of order guarantees the execution price, but does not guarantee the execution itself.
+    \textbf{Лимитная заявка (ордер)}(limit order) представляет собой распоряжение на покупку или продажу ценной бумаги по определенной цене или выше. 
+    Этот тип заявки гарантирует цену исполнения, но не гарантирует само исполнение.
 \end{definition}
 \begin{definition}
-    A \textbf{market order} is an order to buy or sell a security immediately. This type of order guarantees that the order will be executed, but does not guarantee the execution price.
-\end{definition}
-
-Let us introduce several definitions that we will need later.
-\begin{definition}
-    A \textbf{bid} (price) is the highest price that a buyer (i.e., bidder) is willing to pay for the asset. We will denote bid at time $t$ as $B_t$.
-    An \textbf{ask} (price) is the price a seller states they will accept. We will denote ask at time $t$ as $A_t$.
-    The \textbf{bid–ask spread} $s$ is the difference between the prices quoted for an immediate sale (ask) and an immediate purchase (bid): $s = A_t - B_t$.
-    The \textbf{mid-quote price}: $V_{t} = \frac{A_{t} + B_{t}}{2}$.
+    \textbf{Рыночная заявка (ордер)} (market order) представляет собой распоряжение на немедленную покупку или продажу ценной бумаги. 
+    Этот тип заявки гарантирует, что она будет исполнена, но не гарантирует цену исполнения.
 \end{definition}
 
 % \begin{figure}
@@ -47,52 +51,50 @@ Let us introduce several definitions that we will need later.
 %     \label{fig:mvslim}
 % \end{figure}
 
-Now, it is clear that if one wants to sell or buy an amount of an asset large enough to have a significant 
-impact on the market, he should not do it by one order: it would be very expensive, since a large order 
-would remove all the upper levels in the limit order book. Therefore, in practice, all large orders are split into a large number of small ones. 
-For example, one can simply divide an order into N equal parts and sell them at regular intervals (this is called TWAP).
-But is there a better solution?
+Теперь ясно, что если мы хотим продать или купить актив в количестве, достаточно большом, чтобы он мог оказать существенное
+влияние на рынок, мы не должны делать это одной заявкой: это было бы очень дорого, поскольку крупный ордер
+удалил бы все верхние уровни в лимитной книге заявок. Поэтому на практике все крупные заявки разбиваются на большое количество мелких.
+Например, можно просто разделить ордер на N равных частей и продавать их через равные промежутки времени (это называется TWAP).
+Но есть ли лучшее решение?
 
 
-\section{Obizhaeva--Wang Framework}
-Trying to find better solution, we consider an Obizhaeva--Wang Model model, in which terms the problem has the following form: \par
+\section{Подход Обижаевой и Ванга к формализации проблемы}
+В попытке найти лучшее решение, мы рассматриваем модель Обижаевой--Ванга,
+в терминах которой задача имеет следующий вид: \par
 \begin{align*} \label{oEproblem}
     J_0 &= \min _{\{x_0 \cdots x_N \}} E_0 \left[ \sum _{n=0}^N [A_{t_n} + x_n /(2q)] x_n\right],  \\
-    A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)}.
+    A_{t_n} &= F_{t_n} + \lambda (X_0 - X_{t_n}) + s/2 + \sum _{i=0}^{n-1} x_i \kappa e^{- \rho \tau (n - i)},
  \end{align*}
  
-Here:
+где
 \begin{itemize}
- \item The trader has to buy $\mathbf{X_0}$ units of a security over a ﬁxed time period $[0,T]$. 
- \item $x_{t_n}$ 
- --- the trade size at $t_n = \tau n$, where $\tau = T / N$. 
- \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$. 
- \item $B_{t_n}$ and $A_{t_n}$ --- bid and ask prices at $t_n$. 
- \item $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ 
- --- the mid-quote price; 
- \item $s$ --- the bid–ask spread.
- \item $F_t$ --- the fundamental price of the security.
- \item $q(P)$ --- the density of limit orders to sell at price $P$.
+ \item трейдер должен купить $\mathbf{X_0}$ единиц актива за фиксированный период времени $[0,T]$;
+ \item $x_{t_n}$ размер оредра в момент времени $t_n = \tau n$ (здесь, $\tau = T / N$); 
+ \item $X_{t_n} := X_0 - \sum _{t_k < t_n} x_{t_k}$;
+ \item $B_{t_n}$ и $A_{t_n}$ --- бид и аск в момент времени $t_n$; 
+ \item $V_{t_n} = \frac{A_{t_n} + B_{t_n}}{2}$ --- мид; 
+ \item $s$ --- бид-аск спрэд;
+ \item $F_t$ --- фундаментальная (справедливая) цена актива;
+ \item $q(P)$ распределение лимитной книги заявок $P$ (по ценам $[a, b]$ доступно $\int_a^b q(p) dP$ единиц актива);
  % \item $q$, $\lambda$ and $\rho$ is a LOB density, the permanent price impact and the resiliency.
- \item Parameter $\lambda$ captures the permanent price impact.
- \item Parameter $q$ is a LOB density. 
-  \item $\kappa = \frac{1}{q} - \lambda $
- \item Parameter $\rho$ captures the resiliency.
+ \item параметр $\lambda$ --- постоянный маркет импакт (справдливая цена $V_t$ в результате исполнения ордера объема $x$ меняется по закону: $V_{t+} = V_t + \lambda x$);
+  \item $\kappa = \frac{1}{q} - \lambda $;
+ \item параметр $\rho$ --- упргуость стакана (resiliency).
 \end{itemize}
 
-The solution to this stochastic optimal control problem was found in the article \cite{obizhaeva2013optimal}:
+Данная задача была решена в статье \cite{obizhaeva2013optimal}:
 \begin{theorem}
-    The solution to the optimal execution problem is
+    Решение проблемы оптимального исполнения:
     \begin{multline*}
         x_n = - \frac{1}{2} \delta_{n + 1} [D_{t_n} (1 - \beta_{n + 1} e^{ - \rho \tau} + 2 \kappa \gamma_{n+1} e^{ - 2 \rho \tau}) 
          - X_{t_n} (\lambda + 2 \alpha_{n+1} - \beta_{n+1}\kappa e^{ - \rho \tau}) ], 
     \end{multline*}
-    with $x_N = X_N$ and $D_t = A_t - V_t - s/2$. The expected cost for future trades under the optimal
-    strategy is determined according to
+    где $x_N = X_N$ и $D_t = A_t - V_t - s/2$. Ожидаемая цена будущих сделок в рамках
+    стратегии оптимального исполнения меняется по закону
     \begin{equation*}
         J_{t_n} = (F_{t_n} + s/2) X_{t_n} + \lambda X_0 X_{t_n} + \alpha_n X_{t_n} ^2 + \beta_{n} D_{t_n} X_{t_n} + \gamma_n D_{t_n}^2, 
     \end{equation*}
-    where the coefficients $\alpha_{n+1}$, $\beta_{n+1}$, $\gamma_{n+1}$, and $\delta_{n+1}$ are determined recursively as follows:
+    где коэффициенты $\alpha_{n+1}$, $\beta_{n+1}$, $\gamma_{n+1}$ и $\delta_{n+1}$ определяются рекурснивно по формулам:
     \begin{equation*}
         \alpha_{n} = \alpha_{n+1} - \frac{1}{4} \delta _{n+1} (\lambda + 2 \alpha_{n+1} - \beta_{n+1} \kappa e^{- \rho \tau})^2, 
     \end{equation*}
@@ -104,56 +106,103 @@ The solution to this stochastic optimal control problem was found in the article
          \gamma_n =   \gamma_{n+1} e^{- 2 \rho \tau} - \frac{1}{4} \delta _{n+1} (1 - \beta _{n+1} e^{- \rho \tau} 
     + 2 \gamma _{n+1} \kappa e^{- 2 \rho \tau})^2, 
     \end{equation*}
-    with $\delta_{n+1} = [1/(2q) + \alpha_{n+1} - \beta_{n+1} \kappa e^{-\rho \tau} + \gamma _{n+1} \kappa ^2 e^{- 2 \rho \tau}]^{-1}$ and terminal conditions
+    где $\delta_{n+1} = [1/(2q) + \alpha_{n+1} - \beta_{n+1} \kappa e^{-\rho \tau} + \gamma _{n+1} \kappa ^2 e^{- 2 \rho \tau}]^{-1}$ и начальные условия
     \begin{equation*}
         \alpha_{N} = 1/(2q) - \lambda, \;\;\;\;\;\;\; \beta_N = 1, \;\;\;\;\;\;\; \gamma_N = 0.
     \end{equation*}
 \end{theorem}
 
-In our research we will consider the limit of this problem, because it requires less amount of factors:
+В нашем исследовании мы будем рассматривать предел этого решения.
 
 \begin{theorem}
-    As $N \rightarrow \infty$, the optimal execution strategy becomes:
+    Пии $N \rightarrow \infty$, стратегия оптимального исполнения принимает вид:
     \begin{align*}
         & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2}, \\
         & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T), \\
         & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2}.  %\\
     \end{align*}
-    where $x_0$ is the trade at the beginning of trading period, $x_N$ is the trade at the end of trading
-    period, and $\dot X _t$ is the speed of trading in between these trades.
+    где $x_0$ первая сделка за отведенный период, $x_N$ --- последняя, и $\dot X _t$ скорость трейдинга между ними.
 \end{theorem}
 
-Thus, we have an explicit form of optimal execution strategy, but to use and implement it we need to find the factors 
-$\rho, \kappa$ and $\lambda$. And it is not obvious how to do that.
+Таким образом, мы имеем явную формулу для стратегии оптимального исполнения. Но нам необходимо каким-либо образом найти
+параметры $\rho, \kappa$ и $\lambda$ для того, чтобы применить её на практике. 
 
+\section{Как подобрать параметры?}
 
-\section{How to find the factors}
-
-We provide our methodology to find $\rho$. We find it, considering the time series of elements of the model 
-that can be calculated from market data. As an example, we are going to consider the regression:
+Мы предлагаем наш метод для их нахождения: построение регрессии: 
 \begin{theorem}
-        In the regression:                                                                                                                                                                                                                                                                                                                                                                                        
+    Для упрощения записей введём обозначения:
+    \[
+    A_k := A_{t_k}, \; \; \; \; 
+    x_{k}:= x_{t_k}, \; \; \; \; 
+    \Delta t_{k+1} := t_{k+1} - t_k, \; \; \; \;   
+    \Delta A_{k+1} := A_{k+1} - A_k. 
+    \]
+        В регрессии                                                                                                                                                                                                                                                                                                                                                                                       
         \begin{equation*}
             \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
-        = - \rho \Delta A_{k+1} + \rho \lambda x_{k+1} + (\kappa + \lambda) (\frac{x_{k+2}}{\Delta t_{k+2}} - \frac{x_{k+1}}{\Delta t_{k+1}}).
+        = -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} 
+        + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right),
         \end{equation*}
-        the coefficients $\rho, \kappa$ and $\lambda$ the same as in OW model describes the market with dynamics
-        describing by series $A_k, \Delta t _k, x_k$.
+        где $x_{k}$ и $A_{k}$ глубина ордера и аск в момент времени $t_k$, соответственно. \\
+
+        коэффициенты $\rho, \kappa$ и $\lambda$ те же, что в модели Обижаевой--Ванга, описывающей рынок,
+        характеризуемый временными рядами: $A_k, \Delta t _k, x_k$.
+
+
+
 \end{theorem}
 
-Here all the information needed can be extracted from the l3 data: 
+Вся требуемая информация может быть получена из l3 данных: 
 \begin{itemize}
-    \item $\Delta A_{k}$ is an ask change after execution of the limit order with the depth $x_k$.
-    \item $\Delta t_{k}$ is a time between $k$ and $k + 1$ orders of dataset.
+    \item $\Delta A_{k}$ изменение аска в следствие исполнения заявки размера $x_k$ в момент времени $t_k$.
+    \item $\Delta t_{k}$ время между $k$ и $k + 1$ заявками.
 \end{itemize}
 
-Another idea is to consider leveling the dynamics-setting ask after a large order:
+Другая идея связана с рассмотрением уравнения, задающего динамику изменения аска после исполнения крупного ордера:
 \begin{equation*}
         A_t = \overline p _t + \frac{s}{2} + x_1 \kappa e^{- \rho t}.
 \end{equation*}
-This idea looks good, but it is very hard numerically: we tested several different approaches related to this idea, but we were unable 
-to extract adequate parameters.
+Она выглядит хорошо, но сопряжена с существенными численными сложностями: мы протестировали несколько подходов, связанных
+с этой идеей, но нам не удалось извлечь адекватные параметры.
 
 
-\section{Data preparing}
 
+\section{Данные}
+\subsection{Источники и обработка}
+Мы работали с ордерлогами (\href{https://fs.moex.com/f/3198/specifikacija-formata-dannyh.pdf}{спецификация}). Было написано несколько 
+\href{https://github.com/VsevolodZaostrovsky/OWModel/tree/main/New%20data/data%20preparing}{программ},
+которые, в совокупности, распаршивали исходные записи в таблицу из четвёрок (время, аск до исполнения ордера, аск после исполнения ордера, глубина ордера). 
+Следует обратить внимание на то, что заявки, поглощающие несколько уровней, представляются в данных в виде последовательности заявок, поэтому 
+перед началом обработки их следует объединить: объем ордера есть сумма объемов, аск до исполнения --- аск до исполнения первого ордера,
+аск после исполнения --- аск после исполнения последнего ордера. Фрагмент таблицы изображен на рисунке \ref{datacsv}.
+\begin{figure}
+    \includegraphics[scale=0.35]{fig/datscsv.jpg}
+    \caption{Данные после первого этапа парсинга}
+    \label{datacsv}
+\end{figure}
+
+\subsection{Выбор инструмента}
+
+Для очень существенной части активов, торгуемых на московской бирже, модель неприменима: в частности,
+встречается немало инструментов, по которым совершается порядка сотни сделок в день (и даже меньше), из которых подавляющее
+большинство не поглащает ни одного уровня (те фактическая цена совершения сделки равна аску). В целом, известно, что российский рынок 
+характеризуется низким уровнем ликвидности и низким уровнем интенсивности торгов. Для подбора параметров и статистических исследовании
+нам нужно относительно большое количество данных, поэтому мы остановили выбор на исследовании валютных рынков.
+Однако, и среди валютных пар большая часть имеет очень низкую интенсивность торгов, например, CHFRUB\_TOM, CNYRUB\_TOM, HKDRUB\_TOM, 
+JPYRUB\_TOM, KZTRUB\_TOM.
+Даже в паре ликвидных валют EURUSD000TOM происходит лишь порядка пятисот сделок в день. Поэтому мы решили остановить свой выбор на паре
+USD000UTSTOM.
+
+
+
+\subsection{Аномалии}
+
+Данные характеризуются очень большим числом количеством резких однотиковых скачков аска. В частности, пересечение множеств
+сотни самых больших сделок и сотни сделок, сдвинувших аск сильнее всего, пусто. В то же время, эти скачки, в целом, не характеризуют
+динамику рискового актива, поэтому целесообразно исключить их из исследуемого датасета.
+\begin{figure}
+    \includegraphics[scale=0.41]{fig/Palki.pdf}
+    \caption{График аска в первый час торгового дня}
+    \label{datacsv}
+\end{figure}

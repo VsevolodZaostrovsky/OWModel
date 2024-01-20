@@ -1,0 +1,162 @@
+\documentclass[a4paper]{article}
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+%for search in russian
+\usepackage{cmap}
+%--------------------------------------
+
+%Math-specific packages
+%--------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+%Format-specific packages
+%--------------------------------------
+\usepackage[left=1cm,
+            right=1cm,
+            top=1cm,
+            bottom=1cm,
+            bindingoffset=0cm]{geometry}
+%--------------------------------------
+
+% for theorems, lemmas and definitions
+%--------------------------------------
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Теорема}
+
+\theoremstyle{definition}
+\newtheorem {definition}{Опрeделение}
+\newtheorem {task}{Задача}
+
+%--------------------------------------
+
+%Roman enum items
+\usepackage{enumerate}
+
+% For graphics
+%--------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+  % for faster compilation
+  external
+  % for cool arrows
+  , arrows.meta
+  % for angles
+  , angles
+  , quotes
+  , babel
+}
+\tikzsetexternalprefix{tasks/}
+\tikzexternalize
+
+%--------------------------------------
+
+% My commands
+%--------------------------------------
+
+\DeclareMathOperator{\sgn}{sgn}
+
+\def\const{ \mathrm{const} }
+\def\eps{ \varepsilon }
+\def\Eps{ \mathcal{E} }
+
+\def\R{ \mathbb{R} }
+\def\Z{ \mathbb{Z} }
+\def\C{ \mathbb{C} }
+\def\E{ \mathrm{E} }
+\def\D{ \mathrm{D} }
+\def\P{ \mathrm{P} }
+
+\def\littleO{ \overline{\overline{o}} }
+\def\bigO{ \underline{\underline{\mathcal{O}}} }
+
+\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*{\abs}[1]{\left\lvert#1\right\rvert}
+
+\date{Осенний семестр 2023}
+\title{Некоторые доказательства}
+
+% suppress page count
+\pagestyle{empty}
+
+
+
+\begin{document}
+
+
+\begin{theorem}
+    In the regression:                                                                                                                                                                                                                                                                                                                                                                                        
+    \begin{equation*}
+        \frac{\Delta A_{k+2}}{\Delta t_{k+2}} - \frac{\Delta A_{k+1}}{\Delta t_{k+1}} 
+    = - \rho \Delta A_{k+1} + \rho \lambda x_{t_{k+1}} + 
+    (\kappa + \lambda) (\frac{x_{t_{k+2}}}{\Delta t_{k+2}} - \frac{x_{t_{k+1}}}{\Delta t_{k+1}}).
+    \end{equation*}
+    the coefficients $\rho, \kappa$ and $\lambda$ the same as in OW model describes the market with dynamics
+    describing by series $A_k, \Delta t _k, x_k$.
+
+Here:
+\begin{itemize}
+\item $x_{k}$ 
+--- the trade size at $t_k$.
+\item $A_{k}$ --- ask price at $t_k$. 
+\end{itemize}
+
+\end{theorem}
+\begin{proof}
+From the definitions of the model follows three equations:
+\begin{equation} \label{rp1}
+    A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
+\end{equation}
+\begin{equation}\label{rp2}
+    V_{t_{k+1}} = V_{t_k} + \lambda x_{t_k} \rightarrow V_{t_{k+1}} - V_{t_k} = \lambda x_{t_{k}}
+\end{equation}
+\begin{equation} \label{rp3}
+    D_{t_k} = A_{t_k} - V_{t_k} - \frac{s}{2}
+\end{equation}
+
+From \eqref{rp1} and \eqref{rp3}:
+\begin{align*}
+    D_{t_k} &= \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} \\
+    \Delta D_{t_k} &= \sum _{i=0} ^k x_{t_i} \kappa e^{- \rho (t_{k+1} - t_i)} 
+    - \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
+    = \sum _{i=0} ^{k - 1} x_{t_i} \kappa (e^{- \rho (t_{k+1} - t_i)} - e^{- \rho (t_k - t_i)})
+    + x_{t_i} \kappa e^{- \rho (t_{k+1} - t_k)} = \\
+    &= \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} (e^{- \rho (t_{k+1} - t_k)} - 1)
+    + x_{t_i} \kappa e^{- \rho (t_{k+1} - t_k)} = 
+    [\textrm{considering $e^{- \rho (t_{k +1} - t_k)} = 1 - \rho (t_{k+1} - t_k)$}] = \\
+    &=\sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} ((1 - \rho (t_{k+1} - t_k)) - 1)
+    + x_{t_i} \kappa (1 - \rho (t_{k+1} - t_k)) 
+    = - \rho \Delta t_{k} D_{t_k} + x_{t_i} \kappa (1 - \rho \Delta t_{k}).
+\end{align*}
+
+On the other hand, from \eqref{rp2} and \eqref{rp3} one has:
+
+\begin{equation*}
+    \Delta D_k = D_{k+1} - D_k = A_{k+1} + V_{k+1} - A_{k} - V_{k} = \Delta A_k - \Delta V_k \rightarrow \Delta A_k = \Delta D_k + \Delta V_k .
+\end{equation*}
+
+Thus, one has an equation:
+\begin{equation*}
+    \Delta A_k = - \rho \Delta t_{k} D_{t_k} + x_{t_i} \kappa (1 - \rho \Delta t_{k}) + \lambda x_{t_k} .
+\end{equation*} 
+
+But one does not want to deal with $D_{t_k}$, so he divides regression for $\Delta t_k$ and considers 
+a divided difference of $A_{t_{k+1}}$ and $A_{t_{k}}$:
+
+\begin{align*}
+    \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} 
+    &=- \rho D_{t_{k+1}} + x_{t_{k+1}} \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
+     + \rho D_{t_{k}}   - x_{t_{k}}   \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \lambda \frac{x_{t_k}}    {\Delta t_{k}} = \\
+    &= -\rho (\Delta A_k - \Delta V_k) + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) - \rho \kappa (x_{t_{k+1}} - x_{t_{k}})= \\
+    &= -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+\end{align*} 
+
+\end{proof}
+
+\end{document}
