@@ -6,17 +6,16 @@
 	\section{Обоснование метода}
         
         \begin{theorem}
-                В регрессии                                                                                                                                                                                                                                                                                                                                                                                       
+                Если $\rho \Delta t << 1$, то в регрессии                                                                                                                                                                                                                                                                                                                                                                                       
                 \begin{equation*}
                         \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}}
                         = -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + 
                         (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right),
                 \end{equation*}
-                где $x_{k}$ и $A_{k}$ глубина ордера и аск в момент времени $t_k$, соответственно. \\
+                где $x_{k}$ и $A_{k}$ глубина ордера и аск в момент времени $t_k$, соответственно, \\
 
-                коэффициенты $\rho, \kappa$ и $\lambda$ те же, что в модели Обижаевой--Ванга, описывающей рынок,
+                коэффициенты $\rho, \kappa$ и $\lambda$ примерно те же, что в модели Обижаевой--Ванга, описывающей рынок,
                 характеризуемый временными рядами: $A_k, \Delta t _k, x_k$.
-        
 
 
 \end{theorem}
