@@ -237,6 +237,166 @@ impl OrderBook
         // переписать всю функцию на итератор
         if self.instrument == line.SECCODE
         {
+            // println!("len {}", line.TIME.as_str().chars().count());
+            if line.TIME.as_str().chars().count() == 11
+            {
+                let zero: &str = "0";
+                let time_without_zero: &str =  line.TIME.as_str().clone();
+
+                let time_corrected = format!("{zero}{time_without_zero}");
+
+                self.date = match NaiveTime::parse_from_str(&time_corrected, "%H%M%S%f") {
+                    Err(why) => panic!("Couldn't parse {} and {}", &time_corrected, why),
+                    Ok(time) => time,
+                };
+                // println!("{}", format!("{zero}{time_without_zero}"));
+            }
+            else 
+            {
+                self.date = match NaiveTime::parse_from_str(line.TIME.as_str().clone(), "%H%M%S%f") {
+                    Err(why) => panic!("Couldn't parse {} and {}", line.TIME.as_str().clone(), why),
+                    Ok(time) => time,
+                };
+            }
+
+            *step_iter += 1;
+            let side_type = if line.BUYSELL == String::from("B") { Side::BID } else { Side::ASK };
+
+            match line.ACTION {
+                0 => self.remove(&side_type, line.ORDERNO, line.VOLUME),
+                1 => self.add(&side_type, self.price_step_inv, line.PRICE, line.VOLUME, line.ORDERNO),
+                2 => {
+                    self.deal(&side_type, line.ORDERNO, line.VOLUME);
+                    match side_type {
+                        Side::BID => {                        
+                            let result_ask: f64 = match self.ask.keys().next(){
+                                Some(p) => (*p as f64) * self.price_step,
+                                None => 0.0,
+                            };
+                            self.high_bid.push(*self.high_bid.last().unwrap());
+                            self.low_ask.push(result_ask);
+                        },
+                        Side::ASK => {               
+                            let result_bid: f64 = match self.bid.keys().last(){
+                                Some(p) => (*p as f64) * self.price_step,
+                                None => 0.0,
+                            };
+                            self.high_bid.push(result_bid);
+                            self.low_ask.push(*self.low_ask.last().unwrap());
+                        },
+                    }
+                },
+                _ => panic!("\nFound incorrect state of ACTION\n"),
+            }
+
+            // оптимизировать момент когда цена 0.0 (те по лучшей рыночной ставим)
+            // If values of best bid/low ask doesn't exist that we enter 0.0
+            if line.ACTION != 2{
+                let result_bid: f64 = match self.bid.keys().last(){
+                    Some(p) => (*p as f64) * self.price_step,
+                    None => 0.0,
+                };
+
+                let result_ask: f64 = match self.ask.keys().next(){
+                    Some(p) => (*p as f64) * self.price_step,
+                    None => 0.0,
+                };
+                
+                self.high_bid.push(result_bid);
+                self.low_ask.push(result_ask);
+            }
+
+            // self.l3_print_to_file(file_l3);
+
+            // write!(file_l2_bid, "{} ", line.ACTION).expect("TODO: panic message");
+            // write!(file_l2_ask, "{} ", line.ACTION).expect("TODO: panic message");
+
+            // write!(file_l2_bid, "{} Price {} Vol {} \n", line.BUYSELL, line.PRICE, line.VOLUME).expect("TODO: panic message");
+            // write!(file_l2_ask, "{} Price {} Vol {} \n", line.BUYSELL, line.PRICE, line.VOLUME).expect("TODO: panic message");
+
+            if line.ACTION == 2 {
+                if line.BUYSELL == "B" {
+                    self.l2_print_to_file(file_l2_bid, file_l2_ask);
+                    write!(file_l2_bid, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
+                    write!(file_l2_ask, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
+                }
+                if line.BUYSELL == "S" {
+                    self.l2_print_to_file(file_l2_bid, file_l2_ask);
+                    // write!(file_l2_bid, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
+                    // write!(file_l2_ask, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
+                }
+            }
+
+        }
+        else
+        {
+            if !self.instruments.contains(&line.SECCODE){
+                self.instruments.insert(line.SECCODE.clone());
+            }
+            
+        }
+
+    }
+
+    /// Returns new order book created from file.
+    /// # Panics
+    /// This function will panic if file could not be opened (e.g. it does not exist) or contains malformed quotes.
+    pub fn from_file(filename: &str, instrument: String, price_step: f64,) -> OrderBook
+    {
+        let mut orderbook = OrderBook::new(instrument.clone(), price_step);
+
+        let mut reader = match csv::Reader::from_path(filename){
+            Err(why) => panic!("Couldn't open {}: {}", filename, csv::Error::to_string(&why)),
+            Ok(file) => file,
+        };
+        
+        let mut l3_order_book_file: BufWriter<File> = __make_file(format!("{}_l3_orderbook.txt", instrument.clone().as_str()));
+        let mut l2_order_book_ask_file: BufWriter<File> = __make_file(format!("{}_l2_ask.txt", instrument.clone().as_str()));
+        let mut l2_order_book_bid_file: BufWriter<File> = __make_file(format!("{}_l2_bid.txt", instrument.clone().as_str()));
+
+        let mut step_iter: i32 = 0;
+        for result in reader.deserialize()
+        {
+            let record: Tick = match result {
+                Err(why) => panic!("Couldn't parse string by serde {}: {}", filename, csv::Error::to_string(&why)),
+                Ok(file) => file,
+            };
+            orderbook.update(&record, &mut step_iter, 
+                            &mut l3_order_book_file, &mut l2_order_book_ask_file, &mut l2_order_book_bid_file);
+
+
+        }
+        orderbook.clean();
+        l3_order_book_file.flush().expect("Error with flush");
+        l2_order_book_ask_file.flush().expect("Error with flush");
+        l2_order_book_bid_file.flush().expect("Error with flush");
+
+        orderbook
+    }
+
+    pub fn update_time_window(&mut self, line: &Tick, step_iter: &mut i32, file_l3: &mut BufWriter<File>, file_l2_ask: &mut BufWriter<File>, 
+        file_l2_bid: &mut BufWriter<File>, window_start: &String, window_end: &String)
+    {
+        // переписать всю функцию на итератор
+
+        // println!("{}", window_start);
+        // println!("{}", window_end);
+
+        let window_start_NT: NaiveTime = match NaiveTime::parse_from_str(window_start.as_str().clone(), "%H%M%S%f") {
+            Err(why) => panic!("Couldn't parse {} and {}", window_start.as_str().clone(), why),
+            Ok(time) => time,
+        };
+
+        let window_end_NT: NaiveTime = match NaiveTime::parse_from_str(window_end.as_str().clone(), "%H%M%S%f") {
+            Err(why) => panic!("Couldn't parse {} and {}", window_end.as_str().clone(), why),
+            Ok(time) => time,
+        };
+
+        // println!("{}", window_start_NT);
+        // println!("{}", window_end_NT);
+
+        if self.instrument == line.SECCODE
+        {
             self.date = match NaiveTime::parse_from_str(line.TIME.as_str().clone(), "%H%M%S%f") {
                 Err(why) => panic!("Couldn't parse {} and {}", line.TIME.as_str().clone(), why),
                 Ok(time) => time,
@@ -288,28 +448,22 @@ impl OrderBook
                 self.low_ask.push(result_ask);
             }
 
-                self.l3_print_to_file(file_l3);
 
-                // write!(file_l2_bid, "{} ", line.ACTION).expect("TODO: panic message");
-                // write!(file_l2_ask, "{} ", line.ACTION).expect("TODO: panic message");
+                println!("window_start_NT {}", window_start_NT);
 
-                // write!(file_l2_bid, "{} Price {} Vol {} \n", line.BUYSELL, line.PRICE, line.VOLUME).expect("TODO: panic message");
-                // write!(file_l2_ask, "{} Price {} Vol {} \n", line.BUYSELL, line.PRICE, line.VOLUME).expect("TODO: panic message");
+                println!("date {}", self.date);
 
-                if line.ACTION == 2 {
-                    if line.BUYSELL == "B" {
-                        self.l2_print_to_file(file_l2_bid, file_l2_ask);
-                        write!(file_l2_bid, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
-                        write!(file_l2_ask, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
-                    }
-                    if line.BUYSELL == "S" {
-                        self.l2_print_to_file(file_l2_bid, file_l2_ask);
-                        // write!(file_l2_bid, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
-                        // write!(file_l2_ask, "Price {} Vol {} \n", line.PRICE, line.VOLUME).expect("TODO: panic message");
-                    }
+                println!("date > window_start_NT: {}", self.date > window_start_NT);
+
+                println!("window_end_NT {}", window_end_NT);
+
+                println!("date < window_end_NT: {}", self.date < window_end_NT);
+
+                if self.date > window_start_NT && self.date < window_end_NT
+                {
+                    self.l3_print_to_file(file_l3);
+                    self.l2_print_to_file(file_l2_bid, file_l2_ask);
                 }
-
-                // self.l2_print_to_file(file_l2_bid, file_l2_ask);
         }
         else
         {
@@ -321,19 +475,16 @@ impl OrderBook
 
     }
 
-    /// Returns new order book created from file.
-    /// # Panics
-    /// This function will panic if file could not be opened (e.g. it does not exist) or contains malformed quotes.
-    pub fn from_file(filename: &str, instrument: String, price_step: f64,) -> OrderBook
-    {
-        let mut orderbook = OrderBook::new(instrument.clone(), price_step);
+    pub fn from_file_time_window(filename: &str, instrument: String, price_step: f64, window_start: &String, window_end: &String) -> OrderBook
+    {                                                                                                                                                                                                                                       
+        let mut orderbook = OrderBook::new(instrument.clone(), price_step);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
-        let mut reader = match csv::Reader::from_path(filename){
+        let mut reader = match csv::Reader::from_path(filename){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
             Err(why) => panic!("Couldn't open {}: {}", filename, csv::Error::to_string(&why)),
             Ok(file) => file,
         };
         
-        let mut l3_order_book_file:    BufWriter<File> = __make_file(format!("{}_l3_orderbook.txt", instrument.clone().as_str()));
+        let mut l3_order_book_file: BufWriter<File> = __make_file(format!("{}_l3_orderbook.txt", instrument.clone().as_str()));
         let mut l2_order_book_ask_file: BufWriter<File> = __make_file(format!("{}_l2_ask.txt", instrument.clone().as_str()));
         let mut l2_order_book_bid_file: BufWriter<File> = __make_file(format!("{}_l2_bid.txt", instrument.clone().as_str()));
 
@@ -344,8 +495,8 @@ impl OrderBook
                 Err(why) => panic!("Couldn't parse string by serde {}: {}", filename, csv::Error::to_string(&why)),
                 Ok(file) => file,
             };
-            orderbook.update(&record, &mut step_iter, 
-                            &mut l3_order_book_file, &mut l2_order_book_ask_file, &mut l2_order_book_bid_file);
+            orderbook.update_time_window(&record, &mut step_iter, 
+                            &mut l3_order_book_file, &mut l2_order_book_ask_file, &mut l2_order_book_bid_file, window_start, window_end);
 
 
         }
@@ -356,7 +507,7 @@ impl OrderBook
 
         orderbook
     }
-
+    
     /// Returns converted from L3 to L2 matched side.
     pub fn to_l2(&self, side: Side) -> Vec<(f64, f64)>
     {
@@ -372,6 +523,8 @@ impl OrderBook
         l2book_side
     }
 
+    
+
 
     /// Prints full order book state to the file for current date.
     pub fn l3_print_to_file(&self, file : &mut BufWriter<File>)
@@ -380,6 +533,7 @@ impl OrderBook
         self.l3_print_side_to_file(Side::BID, file);
         self.l3_print_side_to_file(Side::ASK, file);
         writeln!(file, "================================\n").expect("TODO: panic message");
+
     }
 
     /// Prints l2 order book state to the file for current date.
@@ -559,4 +713,3 @@ impl OrderBook
     //     }
     // }
 }
-

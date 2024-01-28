@@ -3,6 +3,7 @@ use crate::order_book::OrderBook;
 
 
 fn from_file(filename: &str, instrument: String, price_step: f64) {
+    // let temp_orderbook = OrderBook::from_file_time_window(filename, instrument, price_step, &"100005000000".to_string(), &"100015062664".to_string());
     let temp_orderbook = OrderBook::from_file(filename, instrument, price_step);
     for i in temp_orderbook.instruments{
         println!("{}", i);
@@ -11,17 +12,18 @@ fn from_file(filename: &str, instrument: String, price_step: f64) {
 
 fn main()
 {
+    // from_file("../data/CU/OrderLog20210303.txt", "USD000UTSTOM".to_string(), 0.001); 
 
-    from_file("../data/SE/OrderLog20210303.txt","SBER".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","LKOH".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","GAZP".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","VTBR".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","MTLR".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","MGNT".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","YNDX".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","PLZL".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","SNGSP".to_string(), 0.001); 
-    from_file("../data/SE/OrderLog20210303.txt","ROSN".to_string(), 0.001); 
+    // from_file("OrderLogEx.txt","EURUSD000TOM".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","LKOH".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","GAZP".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","VTBR".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","MTLR".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","MGNT".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","YNDX".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","PLZL".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","SNGSP".to_string(), 0.001); 
+    // from_file("../data/SE/OrderLog20210303.txt","ROSN".to_string(), 0.001); 
 
 
 // from_file("../data/SE/OrderLog20210303.txt","BRZL".to_string(), 0.001); 
@@ -450,7 +452,6 @@ fn main()
 // from_file("../data/SE/OrderLog20210303.txt","VRSBP".to_string(), 0.001); 
 // from_file("../data/SE/OrderLog20210303.txt","MGTS".to_string(), 0.001); 
 
-    // from_file("../data/SE/OrderLog20210303.txt", "EUR000TODTOM".to_string(), 0.001); 
     // from_file("../data/OrderLog20200302.txt", "EURUSDTODTOM".to_string(), 0.001);
     // from_file("../data/OrderLog20200302.txt", "GBPRUBTODTOM".to_string(), 0.001);
     // from_file("../data/OrderLog20200302.txt", "KZTRUB_TOM".to_string(), 0.001);
@@ -502,13 +503,13 @@ fn main()
     // from_file("../data/OrderLog20200302.txt", "CNYRUBTODTOM".to_string(), 0.001);
     // from_file("../data/OrderLog20200302.txt", "CNYRUB_TOM1W".to_string(), 0.001);
 
-    // from_file("../data/CU_OrderLog20210303.txt", "EUR000TODTOM".to_string(), 0.001); 
+    from_file("../data/CU/OrderLog20210303.txt", "EUR000TODTOM".to_string(), 0.001); 
     // from_file("../data/CU_OrderLog20210303.txt", "EURUSDTODTOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "GBPRUBTODTOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "KZTRUB_TOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "CHFRUB_TOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "TRYRUB_TOM".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "EUR_RUB__TOD".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "CHFRUB_TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "USDRUB_TMB".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "EURRUB_TDB".to_string(), 0.001);
@@ -532,25 +533,25 @@ fn main()
     // from_file("../data/CU_OrderLog20210303.txt", "GBPRUB_TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "EURUSD000TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "HKDRUB_TOM".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "USD000TODTOM".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "USD000TODTOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "USDRUB_TOM1W".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "USD000UTSTOM".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "EUR_RUB__TOM".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "USD000UTSTOM".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "TRYRUB_TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "USDRUB_TOM2W".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "CHFRUBTODTOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "KZTRUB_TOD".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "EURUSD000TOM".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "EURUSD000TOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "USDRUB_TOM1M".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "KZTRUBTODTOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "SLVRUB_TOM".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "USD000000TOD".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "USD000000TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "JPYRUB_TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "BYNRUB_TOM".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "GBPRUB_TOM".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "GBPRUB_TOM".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "CNY000000TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "USDRUB_TOM3M".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "HKDRUB_TOD".to_string(), 0.001);
     // from_file("../data/CU_OrderLog20210303.txt", "CNYRUBTODTOM".to_string(), 0.001);
-    // from_file("../data/CU_OrderLog20210303.txt", "CNYRUB_TOM1W".to_string(), 0.001);
+    from_file("../data/CU/OrderLog20210303.txt", "CNYRUB_TOM1W".to_string(), 0.001);
 }
