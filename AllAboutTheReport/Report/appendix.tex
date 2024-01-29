@@ -21,6 +21,7 @@
 \end{theorem}
 \begin{proof}
         Из определения модели имеем три уравнения:
+
         \begin{equation} \label{rp1}
                 A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
         \end{equation}
@@ -39,34 +40,86 @@
                 = \sum _{i=0} ^{k - 1} x_{t_i} \kappa (e^{- \rho (t_{k+1} - t_i)} - e^{- \rho (t_k - t_i)})
                 + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = \\
                 &= \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} (e^{- \rho (t_{k+1} - t_k)} - 1)
-                + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = 
-                [\textrm{полагая, что $e^{- \rho (t_{k +1} - t_k)} = 1 - \rho (t_{k+1} - t_k)$}] = \\
-                &=\sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} ((1 - \rho (t_{k+1} - t_k)) - 1)
-                + x_{t_k} \kappa (1 - \rho (t_{k+1} - t_k)) 
-                = - \rho \Delta t_{k} D_{t_k} + x_{t_k} \kappa (1 - \rho \Delta t_{k}).
+                + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
         \end{align*}
-
         С другой стороны, из \eqref{rp2} и \eqref{rp3} имеем
-
         \begin{equation*}
-                \Delta D_k = D_{k+1} - D_k = A_{k+1} + V_{k+1} - A_{k} - V_{k} = \Delta A_k - \Delta V_k \rightarrow \Delta A_k = \Delta D_k + \Delta V_k .
+                \Delta D_k = D_{t_{k+1}} - D_{t_k} = A_{t_{k+1}} + V_{t_{k+1}} - A_{t_k} - V_{t_k} = \Delta A_k - \Delta V_k \rightarrow \Delta A_k = \Delta D_k + \Delta V_k .
         \end{equation*}
-
         Таким образом, получаем уравнение
+        \begin{equation}\label{mainregreq}
+                \Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
+        \end{equation} 
+        Таким образом, рассматривая различные интерполяции $e^{- \rho \Delta t_k}$ мы можем получить различные варианты регрессий.
+        Например, полагая, что 
         \begin{equation*}
-                \Delta A_k = - \rho \Delta t_{k} D_{t_k} + x_{t_k} \kappa (1 - \rho \Delta t_{k}) + \lambda x_{t_k} .
+                e^{- \rho \Delta t_k} = 1 - \rho \Delta t_k + O((\rho \Delta t_k) ^2), 
+                \text{ где } O((\rho \Delta t_k) ^2) := (\rho \Delta t_k) ^2 \sum_{i=0}^{\infty} \frac{(\rho \Delta t_k)^i}{(i+2)!}
+        \end{equation*}
+        имеем:
+        \begin{equation*}
+                \Delta A_{k} 
+                % =  D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k}
+                =  - \rho D_{t_k} \Delta t_k + x_{t_k} \kappa (1 - \rho \Delta t_k) + \lambda x_{t_k} + (x_{t_k} \kappa + D_{t_k}) O((\rho \Delta t_k) ^2).
+        \end{equation*}
+        Исключим отсюда ряд $D_{t_k}$, поделив на $\Delta t_k$ и рассмотрев разность 
+        $A_{t_{k+1}}$ и $A_{t_{k}}$, получим:
+        \begin{align*}
+                & R := (x_{t_{k+1}} \kappa + D_{t_{k+1}}) O(\rho^2 \Delta t_{k+1}) - (x_{t_k} \kappa + D_{t_k}) O(\rho^2 \Delta t_k) \\
+                \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} &=
+                - \rho D_{t_{k+1}} + x_{t_{k+1}} \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
+                + \rho D_{t_{k}}   - x_{t_{k}}   \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \lambda \frac{x_{t_k}}    {\Delta t_{k}} 
+                + R = \\
+                &= -\rho (\Delta A_k - \Delta V_k) + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) 
+                - \rho \kappa (x_{t_{k+1}} - x_{t_{k}}) + R = \\
+                &= -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} 
+                + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + R.
+        \end{align*} 
+        % Полагая, что $e^{- \rho \Delta t_k} = 1 - \rho \Delta t_k + \frac{1}{2} (\rho \Delta t_k)^2 + o((\rho \Delta t_k) ^3)$, имеем:
+        % \begin{align*}
+        %         \Delta D_{t_k} &=  D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} 
+        %         =  - \rho D_{t_k} \Delta t_k + x_{t_k} \kappa (1 - \rho \Delta t_k) + (x_{t_k} \kappa + D_{t_k}) o((\rho \Delta t_k) ^3) 
+        % \end{align*}
+
+        Для произвольной интерполяции экспоненты полиномом первой степени эти рассуждения не проходят:
+        \begin{equation*}
+                e^{- \rho \Delta t_k} = A - B \Delta t_k + E (\rho \Delta t_k).
+        \end{equation*}
+        Тогда имеем:
+        \begin{align*}
+                \Delta A_k &= D_{t_k} (A - B \Delta t_k + R (\rho \Delta t_k) - 1) + 
+                x_{t_k} \kappa (A - B \Delta t_k + R (\rho \Delta t_k)) + \lambda x_{t_k} =\\
+                &= D_{t_k} (A - 1) - B D_{t_k} \Delta t_k + x_{t_k} \kappa A 
+                - B \kappa x_{t_k} \Delta t_k + \lambda x_{t_k} + (x_{t_k} \kappa + D_{t_k}) E (\rho \Delta t_k).
+        \end{align*}
+        И не ясно, как исключать ряд $D_{t_k}$. Однако, положив $A = 1$, мы всё же можем повторить рассуждения выше и получим возможность
+        более точно интерполировать экспоненту. Все выкладки аналогичны таковым для $\rho$:
+        \begin{align*}
+                & R^1 := E (\rho \Delta t_{k+1}) - E (\rho \Delta t_k) \\
+                & \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = 
+                -B \Delta A_k + B (\lambda + \kappa) x_{t_k} - B \kappa x_{t_{k+1}} 
+                + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + R^1.
+        \end{align*} 
+        Если предположить, что данные действительно подчинены экспоненциальному закону, то, в такой постановке, метод наименьших 
+        квадратов фактически будет решать задачу:
+        \begin{align*}
+        \min _{B \in \mathcal{R}} \max _{x \in [0, t_0]} |e^{-\rho x} - 1 + B x|
+        \end{align*} 
+        Очевидно, разность под модулем обращается в ноль в двух точках ($0$ и $x_0$), если только прямая не является касательной к экспоненте.
+        При этом, функция выпукла в промежутке $[0, x_0]$, а значит имеет там единственную точку экстремума. Из свойств функции ясно, что $B$ 
+        является решением задачи в том и только в том случае, когда:
+        \begin{equation*}
+                - extr \{e^{-\rho x} - 1 + B x \}_{x \in [0, x_0]} = e^{-\rho t_0} - 1 + B t_0.
+        \end{equation*} 
+        Легко найти точку экстремума $x_*$:
+        \begin{equation*}
+                \frac{d}{dx} \Big| _{x=x_*} (e^{-\rho x} - 1 + B x) = 0 \rightarrow -\rho e^{-\rho x_*} + B = 0 \rightarrow x_* = -\frac{1}{\rho} \ln \frac{B}{\rho}.
+        \end{equation*} 
+        Отсюда получаем уравнение, связывающее $\rho$ и $B$:
+        \begin{equation*}
+                2 - \frac{B}{\rho}\left(1 - \ln \frac{B}{\rho}\right) = e^{- \rho t_0} + B t_0.
         \end{equation*} 
 
-        Исключим из него ряд $D_{t_k}$, поделив предыдущее уравнение на $\Delta t_k$ и рассмотрим разность 
-        $A_{t_{k+1}}$ и $A_{t_{k}}$:
-
-        \begin{align*}
-                \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} 
-                &=- \rho D_{t_{k+1}} + x_{t_{k+1}} \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
-                 + \rho D_{t_{k}}   - x_{t_{k}}   \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \lambda \frac{x_{t_k}}    {\Delta t_{k}} = \\
-                &= -\rho (\Delta A_k - \Delta V_k) + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) - \rho \kappa (x_{t_{k+1}} - x_{t_{k}})= \\
-                &= -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
-        \end{align*} 
 
         % Наконец, мы получили искомое уравнение
         % \begin{equation*}
