@@ -102,9 +102,22 @@
         \end{align*} 
         Если предположить, что данные действительно подчинены экспоненциальному закону, то, в такой постановке, метод наименьших 
         квадратов фактически будет решать задачу:
-        \begin{align*}
-        \min _{B \in \mathcal{R}} \max _{x \in [0, t_0]} |e^{-\rho x} - 1 + B x|
-        \end{align*} 
+        \begin{equation*}
+                \sum _{i} \Delta t_i \left(e^{- \rho \Delta t_i} - 1 + B \Delta t_i \right) \rightarrow \min.
+        \end{equation*} 
+        Её решение легко найти аналитически:
+        \begin{equation*}
+                B = \frac{\sum _{i} \Delta t_i}{\sum _{i} \Delta t_i^2} - \frac{\sum _{i} \Delta t_i e^{-\rho \Delta t_i}}{\sum _{i} \Delta t_i^2} 
+                = \frac{\sum _{i} \Delta t_i ( 1 - e^{-\rho \Delta t_i})}{\sum _{i} \Delta t_i^2}.
+        \end{equation*} 
+        При $\rho \Delta t_i \rightarrow 0$ имеем $1 - e^{-\rho \Delta t_i} \rightarrow \rho \Delta t_i$, 
+        а значит, $B \rightarrow \rho$, то есть такой подход подтверждает и расширяет полученный ранее вывод. 
+        Однако, эта формула очень неудобна для численного вычисления $\rho(B)$ в иных случаях. Поэтому будем считать,
+        что при вычисленнии коэффициентов решается задача
+        \begin{equation*}
+                \min _{B \in \mathbb{R}} \max _{x \in [0, t_0]} |e^{- \rho x} - 1 + B x|.
+        \end{equation*} 
+        Здесь $t_0 = \frac{1}{N} \sum_{i=1}^(N) \Delta t_i$.
         Очевидно, разность под модулем обращается в ноль в двух точках ($0$ и $x_0$), если только прямая не является касательной к экспоненте.
         При этом, функция выпукла в промежутке $[0, x_0]$, а значит имеет там единственную точку экстремума. Из свойств функции ясно, что $B$ 
         является решением задачи в том и только в том случае, когда:
@@ -118,6 +131,14 @@
         Отсюда получаем уравнение, связывающее $\rho$ и $B$:
         \begin{equation*}
                 2 - \frac{B}{\rho}\left(1 - \ln \frac{B}{\rho}\right) = e^{- \rho t_0} + B t_0.
+        \end{equation*} 
+        Сделаем замены $\rho x = B, t_0 B = y$:
+        \begin{equation*}
+                2 - x \left(1 - \ln x\right) = e^{- \frac{y}{x}} + y.
+        \end{equation*} 
+        После замен $\rho x = B, t_0 \rho = y$:
+        \begin{equation*}
+                2 - x \left(1 - \ln x\right) = e^{- y} + x y.
         \end{equation*} 
 
 
