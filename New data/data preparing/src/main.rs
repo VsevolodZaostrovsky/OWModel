@@ -28,11 +28,11 @@ fn main()
     // from_file("../data/SE/OrderLog20210303.txt","ROSN".to_string(), 0.001); 
 
 
-    // from_file("../data/CU/OrderLog20210303.txt", "USD000000TOD".to_string(), 0.0001);
-    // from_file("../data/CU/OrderLog20210303.txt", "USD000UTSTOM".to_string(), 0.0001);
+    from_file("../data/CU/OrderLog20210303.txt", "USD000000TOD".to_string(), 0.0001);
+    from_file("../data/CU/OrderLog20210303.txt", "USD000UTSTOM".to_string(), 0.0001);
 
-    // from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOD".to_string(), 0.0001);
-    // from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOM".to_string(), 0.0001);
+    from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOD".to_string(), 0.0001);
+    from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOM".to_string(), 0.0001);
 
     // from_file("../data/CU/OrderLog20210303.txt", "GBPRUB_TOM".to_string(), 0.0001);
     from_file("../data/CU/OrderLog20210303.txt", "GBPRUB_TOD".to_string(), 0.0001);
