@@ -1,11 +1,59 @@
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{|c|c|}
-        \hline
-        $S_t$ & Stock price \\
-        $\sigma_t$ & Spot volatility \\
-        $W_t$ & Brownian motion\\
-        \hline
-    \end{tabular}
-    \caption{Sample table}
-\end{table}
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+        Инструмент        & Число сделок & Не повлияли на аск  %& Спайки\footnote{Мы считаем, что сделка спайк, если она сдвинула} 
+        \\ \hline
+        USD000UTSTOM    & $28361$ &    $95\%$ %& 69\% 
+        \\ \hline
+        USD000000TOD    & $9624$ &     $92\%$ %& 61\% 
+        \\ \hline
+        EUR\_RUB\_\_TOM & $4021$ &  $79\%$ %& 73\% 
+        \\ \hline
+        EUR\_RUB\_\_TOD & $2535$ &  $57\%$ %& 52\% 
+        \\ \hline
+        USD000TODTOM    & $546$ &      $55\%$ %& 95\% 
+        \\ \hline
+        EURUSD000TOM    & $409$ &      $93\%$ %& 82\% 
+        \\ \hline
+        GBPRUB\_TOM     & $220$ &       $60\%$ %& 73\% 
+        \\ \hline
+        EUR000TODTOM    & $168$ &      $89\%$ %& 100\%
+          \\ \hline
+        \end{tabular}
+    \end{center}
+    \label{tableanalCUnew}
+    \caption{Анализ сделок по наиболее торгуемым валютным парам (03.03.2021).}
+\end{table} 
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+        Инструмент   & Число сделок & Не повлияли на аск %& Спайки\footnote{text} 
+        \\ \hline
+        SBER &  $41647$  & $ 96\% $ % &  $ 48\% $
+        \\ \hline
+        GAZP &  $21566$  & $ 86\% $ %  & $ 50\% $ 
+        \\ \hline
+        VTBR &  $17100$  & $ 99\% $ % &  $ 34\%$
+         \\ \hline
+        YNDX &  $14110$  & $ 68\% $ %  & $ 39\% $ 
+        \\ \hline
+        MGNT &  $10929$  & $ 64\% $ %  & $ 30\% $ 
+        \\ \hline
+        LKOH &  $9759 $ &  $ 75\% $ % &  $ 35\% $
+        \\ \hline
+        ROSN &  $8648 $ &  $ 74\% $ % &  $ 39\%$
+         \\ \hline
+        PLZL &  $7121 $ &  $ 56\% $ % &  $ 27\% $
+        \\ \hline
+        SNGSP & $ 6032$  & $ 60\% $ %  & $ 24\% $ 
+        \\ \hline
+        MTLR &  $5985 $ &  $ 46\% $ % &  $ 75\%$
+        \\ \hline
+        \end{tabular}
+    \end{center}
+    \label{tableanalSE}
+    \caption{Анализ сделок по наиболее торгуемым акциям (03.03.2021).}
+\end{table} 

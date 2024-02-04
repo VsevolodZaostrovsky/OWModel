@@ -205,6 +205,24 @@
         Здесь, на рисунках \ref{appstart}--\ref{append}, представлены распределения времён между сделками для всех исследуемых активов.
 
         \begin{figure}
+            \includegraphics[scale=0.35]{fig/timedistr/CU/USD000000TOD.pdf}
+            \caption{Распределение времени между сделками для USD000000TOD}
+            \label{TimeDistrUSD000000TOD}
+        \end{figure}
+        
+        \begin{figure}
+            \includegraphics[scale=0.35]{fig/timedistr/SE/GAZP.pdf}
+            \caption{Распределение времени между сделками для GAZP}
+            \label{TimeDistrGAZPWP}
+        \end{figure}
+        
+        \begin{figure}
+            \includegraphics[scale=0.35]{fig/timedistr/SE/SNGSP.pdf}
+            \caption{Распределение времени между сделками для SNGSP}
+            \label{TimeDistrSNGSPWP}
+        \end{figure}
+
+        \begin{figure}
                 \includegraphics[scale=0.35]{fig/timedistr/SE/YNDX.pdf}
                 \caption{Распределение времени между сделками для YNDX}
                 \label{appstart}
@@ -241,16 +259,6 @@
         \end{figure}
 
         \begin{figure}
-                \includegraphics[scale=0.35]{fig/timedistr/CU/CNY000000TOD.pdf}
-                \caption{Распределение времени между сделками для CNY000000TOD}
-                \label{app}
-        \end{figure}
-        \begin{figure}
-            \includegraphics[scale=0.35]{fig/timedistr/CU/CNYRUB\_TOM.pdf}
-            \caption{Распределение времени между сделками для CNYRUB\_TOM}
-            \label{app}
-        \end{figure}
-        \begin{figure}
                 \includegraphics[scale=0.35]{fig/timedistr/CU/EUR\_RUB\_\_TOD.pdf}
                 \caption{Распределение времени между сделками для EUR\_RUB\_\_TOD}
                 \label{app}
@@ -282,52 +290,5 @@
         \end{figure}
 
 
-        \section{Результаты регрессий на сырых данных}
 
-        \begin{table}[h!]
-                \begin{center}
-                    \begin{tabular}{|c|c|c|c|c|c|}
-                        \hline
-                    Инструмент       & Общее число сделок & $\rho$ & $\rho ^*$ \\ \hline
-                    USD000UTSTOM     & $41963$ & $63550^{***}$ & $18345^{***}$ \\ \hline
-                    USD000000TOD     & $13391$ & $69906^{***}$ & $14649^{***}$ \\ \hline
-                    EUR\_RUB\_\_TOM  & $13383$ & $62892^{***}$ & $2483^{***} $ \\ \hline
-                    EUR\_RUB\_\_TOD  & $4134 $ & $47462^{***}$ & $1675^{**}  $ \\ \hline
-                    USD000TODTOM     & $1343 $ & $19322^{***}$ & $23534^{***}$ \\ \hline
-                    EURUSD000TOM     & $915  $ & $9673^{**}  $ & $4417^{*}   $ \\ \hline
-                    EUR000TODTOM     & $265  $ & $6446       $ & $3750       $ \\ \hline
-                    GBPRUB\_TOM      & $234  $ & $0.0053     $ & $-0.0132    $ \\ \hline
-                    CNYRUB\_TOM      & $167  $ & $11214      $ & $1193       $ \\ \hline
-                    \end{tabular}
-                \end{center}
-                \label{tableanalrdcu}
-                \caption{$B$ и $B ^*$, вычисленные для разных валютных пар на сырых данных}
-            \end{table} 
-            
-            \begin{table}[h!]
-                \begin{center}
-                    \begin{tabular}{|c|c|c|c|c|c|}
-                        \hline
-                    Инструмент        & Общее число сделок & $B$ & $B^*$ \\ \hline
-                    SBER &  $41647$  & $ 43257    $ & $ 357819     $ \\ \hline
-                    GAZP &  $21566$  & $ 31240^{***}    $ & $ 298196^{***}     $ \\ \hline
-                %     VTBR &  $17100$  & $ 2.44e-23 $ & $ 1.49e-23 $  \\ \hline
-                    YNDX &  $14110$  & $ 24715^{***}    $ & $ 65218^{***}     $ \\ \hline
-                    MGNT &  $10929$  & $ 19207^{***}    $ & $ 181582^{***}    $  \\ \hline
-                    LKOH &  $9759 $ &  $307474^{***}    $ & $ 151761^{***}    $  \\ \hline
-                    ROSN &  $8648 $ &  $65814^{***}     $ & $ 92876^{***}     $ \\ \hline
-                    PLZL &  $7121 $ &  $11072^{***}     $ & $ 267550^{***}    $  \\ \hline
-                    SNGSP & $ 6032$  & $ 8652^{***}     $ & $ 137911^{***}    $  \\ \hline
-                    MTLR &  $5985 $ &  $5031^{***}      $ & $ 59414^{***}     $ \\ \hline
-                    \end{tabular}
-                \end{center}
-                \label{tableanalrdse}
-                \caption{$B$ и $B ^*$, вычисленные для разных акций на сырых данных}
-            \end{table} 
-            В данном случае нет формальных оснований полагать, что полученные числа 
-            (см. таблицы \ref{tableanalrdcu} и \ref{tableanalrdse}) имеют какое бы то ни было отношение к модели 
-            Обижаевой--Ванга. Однако, прослеживается некоторая связь между ликвидностью актива и величиной $\rho$, так что есть 
-            вероятность того, что они всё же являются осмысленной мерой ликвидности, связанной с моделью. 
-            Возможно, развитие идей, высказанных в разделе \ref{AppendixBigRho}, помогло бы установить связь между вычисленными в регрессии
-            коэффициентами $B$ и $\rho$. 
 \end{appendices}   % Do not change this line
