@@ -11,6 +11,10 @@ Conference 2023 Materials/presentation/presentation.pdf
 .idea
 data_parsing/target/
 
+.github
+.vscode
+
+
 data_parsing/data/USD_RUB_T+1__2022-11-10_PQ_ask.tsv
 data_parsing/data/USD_RUB_T+1__2022-11-10
 data_parsing/data/USD_RUB_T+1__2022-11-10_PQ_bid.tsv
