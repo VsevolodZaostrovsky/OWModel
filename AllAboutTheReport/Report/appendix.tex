@@ -1,149 +1,19 @@
 \begin{appendices} % Do not change this line (if you have appendices). 
 	% Otherwise, completely delete the contents of this file
 
-
-
-	\section{Обоснование метода}
-
-	Из определения модели имеем три уравнения:
-	\begin{equation} \label{rp1}
-		A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
-	\end{equation}
-	\begin{equation}\label{rp2}
-		V_{t_{k+1}} = V_{t_k} + \lambda x_{t_k} \rightarrow V_{t_{k+1}} - V_{t_k} = \lambda x_{t_{k}}
-	\end{equation}
-	\begin{equation} \label{rp3}
-		D_{t_k} = A_{t_k} - V_{t_k} - \frac{s}{2}
-	\end{equation}
-	Следующее замечание является основополагающим в нашей методологии подбора параметра $\rho$.
-	Здесь и далее $\Delta t_{k} := t_{k+1} - t_k, \Delta A_{k} := A_{t_{k+1}} - A_{t_k}, \Delta x_{k} := x_{t_{k+1}} - x_{t_k}$.
-	\begin{lemma} \label{mainregrOW}
-		В модели Обижаевой-Ванга:
-		\begin{equation*}
-			\Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
-		\end{equation*}
-	\end{lemma}
-	\begin{proof}
-		Сперва покажем, что
-		\begin{equation} \label{DeltaDk}
-			\Delta D_{k} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
-		\end{equation}
-		Пользуясь \eqref{rp1} и \eqref{rp3}, получаем
-		\begin{align*}
-			D_{t_k}      & = \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}                                    \\
-			\Delta D_{k} & = \sum _{i=0} ^k x_{t_i} \kappa e^{- \rho (t_{k+1} - t_i)}
-			- \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
-			= \sum _{i=0} ^{k - 1} x_{t_i} \kappa (e^{- \rho (t_{k+1} - t_i)} - e^{- \rho (t_k - t_i)})
-			+ x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} =                                                                \\
-			             & = \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} (e^{- \rho (t_{k+1} - t_k)} - 1)
-			+ x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
-		\end{align*}
-		Теперь покажем, что
-		\begin{equation*}
-			\Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
-		\end{equation*}
-		Из \eqref{rp2} и \eqref{rp3} имеем
-		\begin{equation*}
-			\Delta D_k = D_{t_{k+1}} - D_{t_k} = A_{t_{k+1}} + V_{t_{k+1}} - A_{t_k} - V_{t_k} = \Delta A_k - \Delta V_k.
-		\end{equation*}
-		Отсюда имеем, что
-		\begin{equation*}
-			\Delta A_k = \Delta D_k + \Delta V_k .
-		\end{equation*}
-		Подставив сюда \eqref{DeltaDk}, получаем утверждение леммы.
-	\end{proof}
-
-	Теперь рассмотрим новую модель, в которой
-	\begin{equation*}
-		\Delta D_{k} = - \hat \rho D_{t_k} \Delta t_k + x_{t_k} \hat \kappa (1 - \hat \rho \Delta t_k).
-	\end{equation*}
-	В частности, если $\forall k \ \hat \rho \Delta t_k < 1$, то
-	этому условию будет удовлетворять модель, аналогичная модели Обижаевой--Ванга во всём,
-	за исключением уравнения динамики аска, которая описывается в ней соотношением
-	\begin{equation} \label{ourmodspec}
-		A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i}  \hat \kappa (1 - \hat \rho (t_k - t_i))^+.
-	\end{equation}
-
-
-	\begin{theorem}
-		Если $\forall k \ \hat \rho \Delta t_k < 1$, то гиперпараметры введённой выше
-		модели удовлетворяют регрессионному соотношению
-		\begin{equation} \label{GenIntT}
-			\frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} =
-			-\hat \rho \Delta A_k + \hat \rho \hat \lambda x_{t_k} - \hat \rho \hat \kappa \Delta x_k
-			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
-		\end{equation}
-	\end{theorem}
-	\begin{proof}
-		По определению модели и с учётом того, что $\forall k \ \hat \rho \Delta t_k < 1$, имеем
-		\begin{equation*}
-			\Delta A_k = - \hat \rho D_{t_k} \Delta t_k + x_{t_k} \hat \kappa (1 - \hat \rho \Delta t_k) + \hat \lambda x_{t_k} .
-		\end{equation*}
-		Тогда
-		\begin{equation*}
-			\frac{\Delta A_k}{\Delta t_k} = -\hat \rho \Delta A_k + \hat \rho \hat \lambda x_{t_k} - \hat \rho \hat \kappa \Delta x_k
-			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
-		\end{equation*}
-		В этом случае,
-		рассматривая разность делённых на время асков, можно
-		исключить из уравнения ненаблюдаемый временной ряд $D_{t_k}$, пользуясь тем, что $\Delta D_k = \Delta A_k -  \Delta V_k$:
-		\begin{align*}
-			% & R := (x_{t_{k+1}} \hat \kappa + D_{t_{k+1}}) \frac{E(\rho \Delta t_{k+1})}{\Delta t_{k+1}} -
-			%  (x_{t_k} \hat \kappa + D_{t_k}) \frac{E(\rho \Delta t_k)}{\Delta t_k} \\
-			\frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} & =
-			%   \\&=
-			- \hat \rho D_{t_{k+1}} + x_{t_{k+1}} \hat \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \hat \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
-			+ \hat \rho D_{t_{k}}   - x_{t_{k}}   \hat \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \hat \lambda \frac{x_{t_k}}    {\Delta t_{k}}
-			=                                                                                                                                                                                                                 \\
-			                                                                          & = -\hat \rho \Delta D_k + (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right)
-			- \hat \rho \hat \kappa (x_{t_{k+1}} - x_{t_{k}}) =                                                                                                                                                               \\
-			                                                                          & = -\hat \rho (\Delta A_k - \Delta V_k) +
-			(\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right)
-			- \hat \rho \hat \kappa (x_{t_{k+1}} - x_{t_{k}}) =                                                                                                                                                               \\
-			                                                                          & = -\hat \rho \Delta A_k + \hat \rho (\hat \lambda + \hat \kappa) x_{t_k} - \hat \rho \hat \kappa x_{t_{k+1}}
-			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right)                                                                                                     \\
-			                                                                          & = -\hat \rho \Delta A_k + \hat \rho \hat \lambda x_{t_k} - \hat \rho \hat \kappa \Delta x_k
-			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
-		\end{align*}
-
-	\end{proof}
-	\par
-
-	\begin{theorem}\label{lilreg}
-		Если $\rho O(\rho \Delta t) \rightarrow 0$, то $\rho \rightarrow \hat \rho$.
-	\end{theorem}
-	\begin{proof}
-		Разложим экспоненту в ряд Тейлора:
-		\begin{equation*}
-			e^{- \rho \Delta t_k} = \sum_{i=0}^{\infty} \frac{(-\rho \Delta t_k)^i}{i!} = 1 - \rho \Delta t_k + O((\rho \Delta t_k)^2),
-		\end{equation*}
-		Тогда, подставив разложение в \eqref{mainregrOW}, имеем
-		\begin{equation*}
-			\frac{\Delta A_k}{\Delta t_k} = - \rho D_{t_k}
-			+ x_{t_k}  \kappa (\frac{1}{\Delta t_k} -  \rho) + \lambda  \frac{x_{t_k}}{\Delta t_k}
-			+ \frac{(D_{t_k} + \kappa x_{t_k})}{\Delta t_k} O((\rho \Delta t_k)^2).
-		\end{equation*}
-		И, аналогично доказательству предыдущей теоремы:
-		\begin{align*}
-			 & R := (D_{t_k} + \kappa x_{t_k}) \rho O(\rho \Delta t_k) + (D_{t_{k+1}} + \kappa x_{t_{k+1}}) \rho O(\rho \Delta t_{k+1})                                 \\
-			 & \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}}
-			+ (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + R.
-		\end{align*}
-	\end{proof}
-
-	\begin{theorem}
-		Модель даёт стратегию оптимального исполнения, аналогичную стратегии оптимального исполнения
-		оригинальной модели Обижаевой--Ванга, в частности, при $N \rightarrow \infty$:
-		\begin{align*}
-			 & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2},                                                      \\
-			 & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T),              \\
-			 & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2}. %\\
-		\end{align*}
-		где $x_0$ первая сделка за отведенный период, $x_N$ --- последняя, и $\dot X _t$ скорость трейдинга между ними.
-	\end{theorem}
-	\begin{proof}
-		Дословно повторяет доказательства A.1 и A.2 из статьи \cite{obizhaeva2013optimal}.
-	\end{proof}
+	% \begin{theorem}
+        %         Модель даёт стратегию оптимального исполнения, аналогичную стратегии оптимального исполнения
+        %         оригинальной модели Обижаевой--Ванга, в частности, при $N \rightarrow \infty$:
+        %         \begin{align*}
+        %             & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\hat \rho T + 2}, \\
+        %             & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\hat \rho X_0}{\hat \rho T + 2}, \;\;\;\;\;\; t \in (0, T), \\
+        %             & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\hat \rho T + 2}.  %\\
+        %         \end{align*}
+        %         где $x_0$ первая сделка за отведенный период, $x_N$ --- последняя, и $\dot X _t$ скорость трейдинга между ними.
+        %       \end{theorem}
+        %       \begin{proof}
+        %         Дословно повторяет доказательства A.1 и A.2 из статьи \cite{obizhaeva2013optimal}.
+        % \end{proof}
 
 	\section{Что делать, если $\rho$ получается большим?} \label{AppendixBigRho}
 
