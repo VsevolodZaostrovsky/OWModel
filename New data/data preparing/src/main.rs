@@ -14,18 +14,16 @@ fn from_file(filename: &str, instrument: String, price_step: f64) {
 
 fn main()
 {
-    // from_file("../data/CU/OrderLog20210303.txt", "USD000UTSTOM".to_string(), 0.001); 
 
-    // from_file("OrderLogEx.txt","EURUSD000TOM".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","LKOH".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","GAZP".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","VTBR".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","MTLR".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","MGNT".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","YNDX".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","PLZL".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","SNGSP".to_string(), 0.001); 
-    // from_file("../data/SE/OrderLog20210303.txt","ROSN".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","LKOH".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","GAZP".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","VTBR".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","MTLR".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","MGNT".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","YNDX".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","PLZL".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","SNGSP".to_string(), 0.001); 
+    from_file("../data/SE/OrderLog20210303.txt","ROSN".to_string(), 0.001); 
 
 
     from_file("../data/CU/OrderLog20210303.txt", "USD000000TOD".to_string(), 0.0001);
@@ -34,11 +32,16 @@ fn main()
     from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOD".to_string(), 0.0001);
     from_file("../data/CU/OrderLog20210303.txt", "EUR_RUB__TOM".to_string(), 0.0001);
 
-    // from_file("../data/CU/OrderLog20210303.txt", "GBPRUB_TOM".to_string(), 0.0001);
     from_file("../data/CU/OrderLog20210303.txt", "GBPRUB_TOD".to_string(), 0.0001);
 
     from_file("../data/CU/OrderLog20210303.txt", "CNY000000TOD".to_string(), 0.00001);
     from_file("../data/CU/OrderLog20210303.txt", "CNYRUB_TOM".to_string(), 0.00001);
+
+
+
+
+
+
 
     // from_file("../data/CU_OrderLog20210303.txt", "CNYRUB_TOM".to_string(), 0.00001);
     // from_file("../data/CU_OrderLog20210303.txt", "GBPRUB_TOD".to_string(), 0.0001);

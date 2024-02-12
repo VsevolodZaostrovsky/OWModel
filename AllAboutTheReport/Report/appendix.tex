@@ -1,215 +1,225 @@
 \begin{appendices} % Do not change this line (if you have appendices). 
-                   % Otherwise, completely delete the contents of this file
+	% Otherwise, completely delete the contents of this file
 
 
 
 	\section{Обоснование метода}
 
-        Из определения модели имеем три уравнения:
-        \begin{equation} \label{rp1}
-                A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
-        \end{equation}
-        \begin{equation}\label{rp2}
-                V_{t_{k+1}} = V_{t_k} + \lambda x_{t_k} \rightarrow V_{t_{k+1}} - V_{t_k} = \lambda x_{t_{k}}
-        \end{equation}
-        \begin{equation} \label{rp3}
-                D_{t_k} = A_{t_k} - V_{t_k} - \frac{s}{2}
-        \end{equation}
-        Следующее замечание является основополагающим в нашей методологии подбора параметра $\rho$.
-        Здесь и далее $\Delta t_{k+1} := t_{k+1} - t_k, \Delta A_{k+1} := A_{k+1} - A_k$.
-        \begin{lemma} \label{mainregrOW}
-                В модели Обижаевой-Ванга:
-                \begin{equation*}
-                        \Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
-                \end{equation*}
-        \end{lemma}
-        \begin{proof}
-                Сперва покажем, что 
-                \begin{equation*} \label{DeltaDk}
-                    \Delta D_{k} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
-                \end{equation*}
-                Пользуясь \eqref{rp1} и \eqref{rp3}, получаем
-                \begin{align*}
-                        D_{t_k} &= \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} \\
-                        \Delta D_{k} &= \sum _{i=0} ^k x_{t_i} \kappa e^{- \rho (t_{k+1} - t_i)} 
-                        - \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
-                        = \sum _{i=0} ^{k - 1} x_{t_i} \kappa (e^{- \rho (t_{k+1} - t_i)} - e^{- \rho (t_k - t_i)})
-                        + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = \\
-                        &= \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} (e^{- \rho (t_{k+1} - t_k)} - 1)
-                        + x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
-                \end{align*}
-                Теперь покажем, что 
-                \begin{equation*}
-                        \Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
-                \end{equation*}
-                Из \eqref{rp2} и \eqref{rp3} имеем
-                \begin{equation*}
-                        \Delta D_k = D_{t_{k+1}} - D_{t_k} = A_{t_{k+1}} + V_{t_{k+1}} - A_{t_k} - V_{t_k} = \Delta A_k - \Delta V_k.
-                \end{equation*}
-                Отсюда имеем, что 
-                \begin{equation*}
-                        \Delta A_k = \Delta D_k + \Delta V_k .
-                \end{equation*}
-                Подставив сюда \eqref{DeltaDk}, получаем утверждение леммы. 
-        \end{proof}
+	Из определения модели имеем три уравнения:
+	\begin{equation} \label{rp1}
+		A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
+	\end{equation}
+	\begin{equation}\label{rp2}
+		V_{t_{k+1}} = V_{t_k} + \lambda x_{t_k} \rightarrow V_{t_{k+1}} - V_{t_k} = \lambda x_{t_{k}}
+	\end{equation}
+	\begin{equation} \label{rp3}
+		D_{t_k} = A_{t_k} - V_{t_k} - \frac{s}{2}
+	\end{equation}
+	Следующее замечание является основополагающим в нашей методологии подбора параметра $\rho$.
+	Здесь и далее $\Delta t_{k} := t_{k+1} - t_k, \Delta A_{k} := A_{t_{k+1}} - A_{t_k}, \Delta x_{k} := x_{t_{k+1}} - x_{t_k}$.
+	\begin{lemma} \label{mainregrOW}
+		В модели Обижаевой-Ванга:
+		\begin{equation*}
+			\Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
+		\end{equation*}
+	\end{lemma}
+	\begin{proof}
+		Сперва покажем, что
+		\begin{equation} \label{DeltaDk}
+			\Delta D_{k} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
+		\end{equation}
+		Пользуясь \eqref{rp1} и \eqref{rp3}, получаем
+		\begin{align*}
+			D_{t_k}      & = \sum _{i=0} ^{k-1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}                                    \\
+			\Delta D_{k} & = \sum _{i=0} ^k x_{t_i} \kappa e^{- \rho (t_{k+1} - t_i)}
+			- \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)}
+			= \sum _{i=0} ^{k - 1} x_{t_i} \kappa (e^{- \rho (t_{k+1} - t_i)} - e^{- \rho (t_k - t_i)})
+			+ x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} =                                                                \\
+			             & = \sum _{i=0} ^{k - 1} x_{t_i} \kappa e^{- \rho (t_k - t_i)} (e^{- \rho (t_{k+1} - t_k)} - 1)
+			+ x_{t_k} \kappa e^{- \rho (t_{k+1} - t_k)} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
+		\end{align*}
+		Теперь покажем, что
+		\begin{equation*}
+			\Delta A_k = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} + \lambda x_{t_k} .
+		\end{equation*}
+		Из \eqref{rp2} и \eqref{rp3} имеем
+		\begin{equation*}
+			\Delta D_k = D_{t_{k+1}} - D_{t_k} = A_{t_{k+1}} + V_{t_{k+1}} - A_{t_k} - V_{t_k} = \Delta A_k - \Delta V_k.
+		\end{equation*}
+		Отсюда имеем, что
+		\begin{equation*}
+			\Delta A_k = \Delta D_k + \Delta V_k .
+		\end{equation*}
+		Подставив сюда \eqref{DeltaDk}, получаем утверждение леммы.
+	\end{proof}
 
-        Мы считаем, что при всей своей простоте оно очень ценно, поскольку даёт путь к выводу регрессионного уравнения.
-
-        \begin{theorem} \label{GenIntT}
-                Интерполируя экспоненту в выражении 
-                \begin{equation*} \label{DeltaDk}
-                        \Delta D_{k} = D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k}.
-                \end{equation*}
-                функцией вида $e^{- \rho \Delta t_k} = 1 - B \rho \Delta t_k + E(\rho \Delta t_k) $, где $E(\rho \Delta t_k)$ ---
-                ошибка интерполяции,
-                можно получить регрессионное уравнение вида:
-                \begin{align*}
-                        & \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = 
-                        -B \Delta A_k + B (\lambda + \kappa) x_{t_k} - B \kappa x_{t_{k+1}} 
-                        + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + E (\rho \Delta t_{k+1}) - E (\rho \Delta t_k).
-                \end{align*}  
-        \end{theorem}
-        \begin{proof}
-                Пусть $f(\rho \Delta t_k)$ --- некоторая функция, приближающая экспоненту с ошибкой $(\rho \Delta t_k)$.
-                Тогда, подставив эту функцию в уравнение \eqref{mainregrOW}, получаем
-                \begin{equation*}
-                        \frac{\Delta A_k}{\Delta t_k} = D_{t_k} (\frac{f(\rho \Delta t_k) - 1}{\Delta t_k}) 
-                        + x_{t_k} \kappa {\frac{f(\rho \Delta t_k)}{\Delta t_k}} + \lambda \frac{x_{t_k}}{\Delta t_k} . 
-                \end{equation*}
-                Потребуем, чтобы при рассмотрении разности $\frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_k}{\Delta t_k}$ 
-                выполнялось условие 
-                $\frac{f(\rho \Delta t_{k+1}) - 1}{\Delta t_{k+1}} = \frac{f(\rho \Delta t_k) - 1}{\Delta t_k}$. В этом случае, 
-                рассматривая разность делённых на время асков, можно
-                исключить из уравнения ненаблюдаемый временной ряд $D_{t_k}$:
-                \begin{align*}
-                        & R := (x_{t_{k+1}} \kappa + D_{t_{k+1}}) \frac{E(\rho \Delta t_{k+1})}{\Delta t_{k+1}} -
-                         (x_{t_k} \kappa + D_{t_k}) \frac{E(\rho \Delta t_k)}{\Delta t_k} \\
-                        \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} &=
-                        - B D_{t_{k+1}} + x_{t_{k+1}} \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
-                        + B D_{t_{k}}   - x_{t_{k}}   \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \lambda \frac{x_{t_k}}    {\Delta t_{k}} 
-                        + R = \\
-                        &= -B (\Delta A_k - \Delta V_k) + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) 
-                        - B \kappa (x_{t_{k+1}} - x_{t_{k}}) + R = \\
-                        &= -B \Delta A_k + B (\lambda + \kappa) x_{t_k} - B \kappa x_{t_{k+1}} 
-                        + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + R.
-                \end{align*} 
-
-        \end{proof}
-        \par
-        Помимо всего прочего, в доказательстве показано, что такой подход к выводу регрессионного уравнения 
-        не работает ни для какого более широкого класса непрерывных или монотонных функций, чем двучлены вида 
-        $1 - B \rho \Delta t_k$,
-        поскольку единственной непрерывной или монотонной функцией одной переменной, обладающей свойством
-        однородности первой степени, необходимым для осуществления рассуждения выше, является функция 
-        $g(\rho \Delta t_k) = f(\rho \Delta t_k) - 1 = - B \rho \Delta t_k $. 
-        \par
-        Впрочем, это не исключает возможности того, что существует иной путь вывода регрессионого уравнения,
-        позволяющий рассмотреть более точную интерполяцию. Это интересный вопрос для отдельного исследования.  
-        
-        \begin{theorem}\label{lilreg}
-                В регрессии                                                                                                                                                                                                                                                                                                                                                                                       
-                \begin{equation*}
-                        \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}}
-                        = -B \Delta A_k + B (\lambda + \kappa) x_{t_k} - B \kappa x_{t_{k+1}} + 
-                        (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right),
-                \end{equation*}
-                где $x_{k}$ и $A_{k}$ --- глубина ордера и аск в момент времени $t_k$, соответственно, \\
-                $\rho = B + O(\rho^2 \Delta t)$ .
-        \end{theorem}
-        \begin{proof}
-        Разложим экспоненту в ряд Тейлора: 
-        \begin{equation*}
-                e^{- \rho \Delta t_k} = 1 - \rho \Delta t_k + (\rho \Delta t_k) ^2 \sum_{i=0}^{\infty} \frac{(\rho \Delta t_k)^i}{(i+2)!},
-        \end{equation*}
-        тогда из \ref{GenIntT}, получим:
-        \begin{align*}
-                & R := (x_{t_{k+1}} \kappa + D_{t_{k+1}}) \rho^2 \Delta t_{k+1}  \sum_{i=0}^{\infty} \frac{(\rho \Delta t_{k+1})^i}{(i+2)!} 
-                - (x_{t_k} \kappa + D_{t_k}) \rho^2 \Delta t_k \sum_{i=0}^{\infty} \frac{(\rho \Delta t_k)^i}{(i+2)!} \\
-                & \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} 
-                + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + R.
-        \end{align*} 
-        \end{proof}
-        % Полагая, что $e^{- \rho \Delta t_k} = 1 - \rho \Delta t_k + \frac{1}{2} (\rho \Delta t_k)^2 + o((\rho \Delta t_k) ^3)$, имеем:
-        % \begin{align*}
-        %         \Delta D_{t_k} &=  D_{t_k} (e^{- \rho \Delta t_k} - 1) + x_{t_k} \kappa e^{- \rho \Delta t_k} 
-        %         =  - \rho D_{t_k} \Delta t_k + x_{t_k} \kappa (1 - \rho \Delta t_k) + (x_{t_k} \kappa + D_{t_k}) o((\rho \Delta t_k) ^3) 
-        % \end{align*}
-
-        \section{Что делать, если $\rho$ получается большим?} \label{AppendixBigRho}
-
-        Теорема \ref{lilreg} даёт указание к действию, когда $\rho^2 \Delta t$ мал. Но что делать, если это условие систематически 
-        нарушается, например, актив настолько ликвиден, что $\rho$ существенно превосходит единицу? \par
-        % Если предположить, что данные действительно подчинены экспоненциальному закону, то, в такой постановке, метод наименьших 
-        % квадратов фактически будет решать задачу:
-        % \begin{equation*}
-        %         \sum _{i} \Delta t_i \left(e^{- \rho \Delta t_i} - 1 + B \Delta t_i \right) \rightarrow \min.
-        % \end{equation*} 
-        % Её решение легко найти аналитически:
-        % \begin{equation*}
-        %         B = \frac{\sum _{i} \Delta t_i}{\sum _{i} \Delta t_i^2} - \frac{\sum _{i} \Delta t_i e^{-\rho \Delta t_i}}{\sum _{i} \Delta t_i^2} 
-        %         = \frac{\sum _{i} \Delta t_i ( 1 - e^{-\rho \Delta t_i})}{\sum _{i} \Delta t_i^2}.
-        % \end{equation*} 
-        % При $\rho \Delta t_i \rightarrow 0$ имеем $1 - e^{-\rho \Delta t_i} \rightarrow \rho \Delta t_i$, 
-        % а значит, $B \rightarrow \rho$, то есть такой подход подтверждает и расширяет полученный ранее вывод. 
-        % Однако, эта формула очень неудобна для численного вычисления $\rho(B)$ в иных случаях. Поэтому будем считать,
-        % что при вычисленнии коэффициентов решается задача
-        
-        \begin{theorem}
-                Если считать, что при большом $\rho \Delta t$ регрессия решает задачу
-                \begin{equation*}
-                        \min _{B \in \mathbb{R}} \max _{x \in [0, t_0]} |e^{- \rho x} - 1 + B x|,
-                \end{equation*} 
-                где $t_0$ некоторое "среднее" время между двумя соседними ордерами, то $B$ и $\rho$ связаны уравнением:
-                \begin{equation*}
-                        2 - \frac{B}{\rho}\left(1 - \ln \frac{B}{\rho}\right) = e^{- \rho t_0} + B t_0.
-                \end{equation*} 
-        \end{theorem}
-        \begin{proof}
-        Очевидно, разность под модулем обращается в ноль в двух точках ($0$ и $x_0$), если только прямая не является касательной к экспоненте.
-        При этом, функция выпукла в промежутке $[0, x_0]$, а значит имеет там единственную точку экстремума. Из свойств функции ясно, что $B$ 
-        является решением задачи в том и только в том случае, когда:
-        \begin{equation*}
-                - extr \{e^{-\rho x} - 1 + B x \}_{x \in [0, x_0]} = e^{-\rho t_0} - 1 + B t_0.
-        \end{equation*} 
-        Легко найти точку экстремума $x_*$:
-        \begin{equation*}
-                \frac{d}{dx} \Big| _{x=x_*} (e^{-\rho x} - 1 + B x) = 0 \rightarrow -\rho e^{-\rho x_*} + B = 0 \rightarrow x_* = -\frac{1}{\rho} \ln \frac{B}{\rho}.
-        \end{equation*} 
-        Отсюда получаем уравнение, связывающее $\rho$ и $B$:
-        \begin{equation*}
-                2 - \frac{B}{\rho}\left(1 - \ln \frac{B}{\rho}\right) = e^{- \rho t_0} + B t_0.
-        \end{equation*} 
-        \end{proof}
-        \textit{Замечание.} Сделаем замены $\rho x = B, t_0 B = y$, тогда уравнение примет вид:
-        \begin{equation*}
-                2 - x \left(1 - \ln x\right) = e^{- \frac{y}{x}} + y.
-        \end{equation*} 
-        После замен $\rho x = B, t_0 \rho = y$ уравнение примет вид:
-        \begin{equation*}
-                2 - x \left(1 - \ln x\right) = e^{- y} + x y.
-        \end{equation*} 
-        Такие представления уравнений могут быть использованы для исследования связи $\rho$ и $B$. Например, в случае когда $B$ велико и,
-        как следствие, не выполнено условие теоремы \ref{lilreg}, в некоторых случаях благодаря предположениям на $y$ мы можем получить оценку
-        $x$. Если $B / x$ велико, то можно утверждать, что $\rho$ велико по модулю. В этом случае, стратегия оптимального исполнения вырождается в
-        TWAP.
+	Теперь рассмотрим новую модель, в которой
+	\begin{equation*}
+		\Delta D_{k} = - \hat \rho D_{t_k} \Delta t_k + x_{t_k} \hat \kappa (1 - \hat \rho \Delta t_k).
+	\end{equation*}
+	В частности, если $\forall k \ \hat \rho \Delta t_k < 1$, то
+	этому условию будет удовлетворять модель, аналогичная модели Обижаевой--Ванга во всём,
+	за исключением уравнения динамики аска, которая описывается в ней соотношением
+	\begin{equation} \label{ourmodspec}
+		A_{t_k} = V_{t_k} + \frac{s}{2} + \sum _{i=0} ^{k-1} x_{t_i}  \hat \kappa (1 - \hat \rho (t_k - t_i))^+.
+	\end{equation}
 
 
-        % Наконец, мы получили искомое уравнение
-        % \begin{equation*}
-        %         \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = 
-        %         -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
-        % \end{equation*}
-	
+	\begin{theorem}
+		Если $\forall k \ \hat \rho \Delta t_k < 1$, то гиперпараметры введённой выше
+		модели удовлетворяют регрессионному соотношению
+		\begin{equation} \label{GenIntT}
+			\frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} =
+			-\hat \rho \Delta A_k + \hat \rho \hat \lambda x_{t_k} - \hat \rho \hat \kappa \Delta x_k
+			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+		\end{equation}
+	\end{theorem}
+	\begin{proof}
+		По определению модели и с учётом того, что $\forall k \ \hat \rho \Delta t_k < 1$, имеем
+		\begin{equation*}
+			\Delta A_k = - \hat \rho D_{t_k} \Delta t_k + x_{t_k} \hat \kappa (1 - \hat \rho \Delta t_k) + \hat \lambda x_{t_k} .
+		\end{equation*}
+		Тогда
+		\begin{equation*}
+			\frac{\Delta A_k}{\Delta t_k} = -\hat \rho \Delta A_k + \hat \rho \hat \lambda x_{t_k} - \hat \rho \hat \kappa \Delta x_k
+			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+		\end{equation*}
+		В этом случае,
+		рассматривая разность делённых на время асков, можно
+		исключить из уравнения ненаблюдаемый временной ряд $D_{t_k}$, пользуясь тем, что $\Delta D_k = \Delta A_k -  \Delta V_k$:
+		\begin{align*}
+			% & R := (x_{t_{k+1}} \hat \kappa + D_{t_{k+1}}) \frac{E(\rho \Delta t_{k+1})}{\Delta t_{k+1}} -
+			%  (x_{t_k} \hat \kappa + D_{t_k}) \frac{E(\rho \Delta t_k)}{\Delta t_k} \\
+			\frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} & =
+			%   \\&=
+			- \hat \rho D_{t_{k+1}} + x_{t_{k+1}} \hat \kappa \left(\frac{1}{\Delta t_{k+1}} - \rho \right) + \hat \lambda \frac{x_{t_{k+1}}}{\Delta t_{k+1}}
+			+ \hat \rho D_{t_{k}}   - x_{t_{k}}   \hat \kappa \left(\frac{1}{\Delta t_{k}} - \rho \right)   - \hat \lambda \frac{x_{t_k}}    {\Delta t_{k}}
+			=                                                                                                                                                                                                                 \\
+			                                                                          & = -\hat \rho \Delta D_k + (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right)
+			- \hat \rho \hat \kappa (x_{t_{k+1}} - x_{t_{k}}) =                                                                                                                                                               \\
+			                                                                          & = -\hat \rho (\Delta A_k - \Delta V_k) +
+			(\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right)
+			- \hat \rho \hat \kappa (x_{t_{k+1}} - x_{t_{k}}) =                                                                                                                                                               \\
+			                                                                          & = -\hat \rho \Delta A_k + \hat \rho (\hat \lambda + \hat \kappa) x_{t_k} - \hat \rho \hat \kappa x_{t_{k+1}}
+			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right)                                                                                                     \\
+			                                                                          & = -\hat \rho \Delta A_k + \hat \rho \hat \lambda x_{t_k} - \hat \rho \hat \kappa \Delta x_k
+			+ (\hat \lambda + \hat \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+		\end{align*}
 
-        \section{Время между сделками} \label{timedistr}
-        Здесь, на рисунках \ref{appstart}--\ref{append}, представлены распределения времён между сделками для всех исследуемых активов.
+	\end{proof}
+	\par
 
-        \subimport{./fig/}{figinc.tex}
+	\begin{theorem}\label{lilreg}
+		Если $\rho O(\rho \Delta t) \rightarrow 0$, то $\rho \rightarrow \hat \rho$.
+	\end{theorem}
+	\begin{proof}
+		Разложим экспоненту в ряд Тейлора:
+		\begin{equation*}
+			e^{- \rho \Delta t_k} = \sum_{i=0}^{\infty} \frac{(-\rho \Delta t_k)^i}{i!} = 1 - \rho \Delta t_k + O((\rho \Delta t_k)^2),
+		\end{equation*}
+		Тогда, подставив разложение в \eqref{mainregrOW}, имеем
+		\begin{equation*}
+			\frac{\Delta A_k}{\Delta t_k} = - \rho D_{t_k}
+			+ x_{t_k}  \kappa (\frac{1}{\Delta t_k} -  \rho) + \lambda  \frac{x_{t_k}}{\Delta t_k}
+			+ \frac{(D_{t_k} + \kappa x_{t_k})}{\Delta t_k} O((\rho \Delta t_k)^2).
+		\end{equation*}
+		И, аналогично доказательству предыдущей теоремы:
+		\begin{align*}
+			 & R := (D_{t_k} + \kappa x_{t_k}) \rho O(\rho \Delta t_k) + (D_{t_{k+1}} + \kappa x_{t_{k+1}}) \rho O(\rho \Delta t_{k+1})                                 \\
+			 & \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}}
+			+ (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right) + R.
+		\end{align*}
+	\end{proof}
 
-        \section{Разные промежутки агрегации данных} \label{aggrnot1}
+	\begin{theorem}
+		Модель даёт стратегию оптимального исполнения, аналогичную стратегии оптимального исполнения
+		оригинальной модели Обижаевой--Ванга, в частности, при $N \rightarrow \infty$:
+		\begin{align*}
+			 & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \frac{X_0}{\rho T + 2},                                                      \\
+			 & \lim _{N \rightarrow \infty} x_n / (T/N) = \dot X _t = \frac{\rho X_0}{\rho T + 2}, \;\;\;\;\;\; t \in (0, T),              \\
+			 & \lim _{N \rightarrow \infty} x_0 = x_{t = 0} = \lim _{N \rightarrow \infty} x_n / (T/N) = x_{t=T}=  \frac{X_0}{\rho T + 2}. %\\
+		\end{align*}
+		где $x_0$ первая сделка за отведенный период, $x_N$ --- последняя, и $\dot X _t$ скорость трейдинга между ними.
+	\end{theorem}
+	\begin{proof}
+		Дословно повторяет доказательства A.1 и A.2 из статьи \cite{obizhaeva2013optimal}.
+	\end{proof}
 
-        \subimport{./tab/Appendix/}{Agr_CU.tex}
-        \subimport{./tab/Appendix/}{Agr_SE.tex}
+	\section{Что делать, если $\rho$ получается большим?} \label{AppendixBigRho}
+
+	Теорема \ref{lilreg} даёт указание к действию, когда $\rho^2 \Delta t$ мал. Но что делать, если это условие систематически
+	нарушается, например, актив настолько ликвиден, что $\rho$ существенно превосходит единицу? \par
+	% Если предположить, что данные действительно подчинены экспоненциальному закону, то, в такой постановке, метод наименьших 
+	% квадратов фактически будет решать задачу:
+	% \begin{equation*}
+	%         \sum _{i} \Delta t_i \left(e^{- \rho \Delta t_i} - 1 + B \Delta t_i \right) \rightarrow \min.
+	% \end{equation*} 
+	% Её решение легко найти аналитически:
+	% \begin{equation*}
+	%         B = \frac{\sum _{i} \Delta t_i}{\sum _{i} \Delta t_i^2} - \frac{\sum _{i} \Delta t_i e^{-\rho \Delta t_i}}{\sum _{i} \Delta t_i^2} 
+	%         = \frac{\sum _{i} \Delta t_i ( 1 - e^{-\rho \Delta t_i})}{\sum _{i} \Delta t_i^2}.
+	% \end{equation*} 
+	% При $\rho \Delta t_i \rightarrow 0$ имеем $1 - e^{-\rho \Delta t_i} \rightarrow \rho \Delta t_i$, 
+	% а значит, $B \rightarrow \rho$, то есть такой подход подтверждает и расширяет полученный ранее вывод. 
+	% Однако, эта формула очень неудобна для численного вычисления $\rho(B)$ в иных случаях. Поэтому будем считать,
+	% что при вычисленнии коэффициентов решается задача
+
+	\begin{theorem}
+		Если считать, что при большом $\rho \Delta t$ регрессия решает задачу
+		\begin{equation*}
+			\min _{B \in \mathbb{R}} \max _{x \in [0, t_0]} |e^{- \rho x} - 1 + B x|,
+		\end{equation*}
+		где $t_0$ некоторое "среднее" время между двумя соседними ордерами, то $B$ и $\rho$ связаны уравнением:
+		\begin{equation*}
+			2 - \frac{B}{\rho}\left(1 - \ln \frac{B}{\rho}\right) = e^{- \rho t_0} + B t_0.
+		\end{equation*}
+	\end{theorem}
+	\begin{proof}
+		Очевидно, разность под модулем обращается в ноль в двух точках ($0$ и $x_0$), если только прямая не является касательной к экспоненте.
+		При этом, функция выпукла в промежутке $[0, x_0]$, а значит имеет там единственную точку экстремума. Из свойств функции ясно, что $B$
+		является решением задачи в том и только в том случае, когда:
+		\begin{equation*}
+			- extr \{e^{-\rho x} - 1 + B x \}_{x \in [0, x_0]} = e^{-\rho t_0} - 1 + B t_0.
+		\end{equation*}
+		Легко найти точку экстремума $x_*$:
+		\begin{equation*}
+			\frac{d}{dx} \Big| _{x=x_*} (e^{-\rho x} - 1 + B x) = 0 \rightarrow -\rho e^{-\rho x_*} + B = 0 \rightarrow x_* = -\frac{1}{\rho} \ln \frac{B}{\rho}.
+		\end{equation*}
+		Отсюда получаем уравнение, связывающее $\rho$ и $B$:
+		\begin{equation*}
+			2 - \frac{B}{\rho}\left(1 - \ln \frac{B}{\rho}\right) = e^{- \rho t_0} + B t_0.
+		\end{equation*}
+	\end{proof}
+	\textit{Замечание.} Сделаем замены $\rho x = B, t_0 B = y$, тогда уравнение примет вид:
+	\begin{equation*}
+		2 - x \left(1 - \ln x\right) = e^{- \frac{y}{x}} + y.
+	\end{equation*}
+	После замен $\rho x = B, t_0 \rho = y$ уравнение примет вид:
+	\begin{equation*}
+		2 - x \left(1 - \ln x\right) = e^{- y} + x y.
+	\end{equation*}
+	Такие представления уравнений могут быть использованы для исследования связи $\rho$ и $B$. Например, в случае когда $B$ велико и,
+	как следствие, не выполнено условие теоремы \ref{lilreg}, в некоторых случаях благодаря предположениям на $y$ мы можем получить оценку
+	$x$. Если $B / x$ велико, то можно утверждать, что $\rho$ велико по модулю. В этом случае, стратегия оптимального исполнения вырождается в
+	TWAP.
+
+
+	% Наконец, мы получили искомое уравнение
+	% \begin{equation*}
+	%         \frac{\Delta A_{k+1}}{\Delta t_{k+1}} - \frac{\Delta A_{k}}{\Delta t_{k}} = 
+	%         -\rho \Delta A_k + \rho (\lambda + \kappa) x_{t_k} - \rho \kappa x_{t_{k+1}} + (\lambda + \kappa) \left(\frac{x_{t_{k+1}}}{\Delta t_{k+1}} - \frac{x_{t_k}}{\Delta t_{k}}\right).
+	% \end{equation*}
+
+
+	\section{Время между сделками} \label{timedistr}
+	Здесь, на рисунках \ref{appstart}--\ref{append}, представлены распределения времён между сделками для всех исследуемых активов.
+
+	\subimport{./fig/}{figinc.tex}
+
+	\section{Разные промежутки агрегации данных} \label{aggrnot1}
+
+	\subimport{./tab/Appendix/}{Agr_CU.tex}
+	\subimport{./tab/Appendix/}{Agr_SE.tex}
 
 
 
